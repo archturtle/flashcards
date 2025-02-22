@@ -59,6 +59,21 @@ public class CardController {
         }
     }
 
+    @PostMapping("/create-many")
+    public ResponseEntity<ArrayList<Card>> createCards(@Valid @RequestBody ArrayList<Card> cards) {
+        LOG.log(Level.INFO, "POST /create-many {0}", card);
+
+        try {
+            for (Card card: cards) {
+                card.setId(null);
+            }
+            ArrayList<Card> allCards = cardDAO.saveAll(cards);
+            return new ResponseEntity<>(allCards, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @PostMapping("/delete/{id}")
     public ResponseEntity<Card> deleteCard(@PathVariable String id) {
         LOG.log(Level.INFO, "POST /delete/{0}", id);
