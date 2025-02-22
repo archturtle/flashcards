@@ -1,1 +1,44 @@
 .idea/
+
+
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+frontend/node_modules
+frontend/.pnp
+frontend/.pnp.*
+frontend/.yarn/*
+fontend/!.yarn/patches
+fontend/!.yarn/plugins
+fontend/!.yarn/releases
+fontend/!.yarn/versions
+
+# testing
+fontend//coverage
+
+# next.js
+fontend//.next/
+fontend//out/
+
+# production
+fontend//build
+
+# misc
+fontend/.DS_Store
+fontend/*.pem
+
+# debug
+fontend/npm-debug.log*
+fontend/yarn-debug.log*
+fontend/yarn-error.log*
+fontend/.pnpm-debug.log*
+
+# env files (can opt-in for committing if needed)
+fontend/.env*
+
+# vercel
+fontend/.vercel
+
+# typescript
+fontend/*.tsbuildinfo
+fontend/next-env.d.ts

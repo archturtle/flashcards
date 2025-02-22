@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #e6eee6;
+  --foreground: #171717;
+}
+
+::selection {
+  background-color: #a1e179;
+}
+
+/*@media (prefers-color-scheme: dark) {*/
+/*  :root {*/
+/*    --background: #0a0a0a;*/
+/*    --foreground: #ededed;*/
+/*  }*/
+/*}*/
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  scrollbar-color: rgb(206, 202, 205) transparent;
+}
