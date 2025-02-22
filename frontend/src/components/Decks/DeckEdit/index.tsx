@@ -1,0 +1,56 @@
+"use client";
+
+import Button from "@/components/ui/Button";
+import { selectCardsByDeckId, selectDeckById } from "@/store/decks/module";
+import { IconArrowLeft } from "@tabler/icons-react";
+import { isNil } from "lodash";
+import { useRouter } from "next/navigation";
+import { useDispatch, useSelector } from "react-redux";
+import CardForEdit from "./CardForEdit";
+import { AppDispatch } from "@/store/store";
+
+interface Props {
+  id?: string;
+}
+
+const DeckEdit = ({ id }: Props) => {
+  const router = useRouter();
+  const dispatch = useDispatch<AppDispatch>();
+
+  const deck = useSelector(!isNil(id) ? selectDeckById(id) : () => undefined);
+
+  const cards = useSelector(
+    !isNil(deck?.id) ? selectCardsByDeckId(deck?.id) : () => [],
+  );
+
+  if (isNil(deck)) return "Deck is not defined";
+
+  return (
+    <div className="flex flex-col gap-2 flex-1 pb-[16px]">
+      <div className="flex items-center gap-[20px]">
+        <Button
+          isIcon
+          size="sm"
+          className="h-[48px] px-[12px]"
+          onClick={() => router.push("/decks")}
+        >
+          <IconArrowLeft stroke={3} size={24} />
+        </Button>
+        <h1 className="font-bold text-[40px]">{deck.name}</h1>
+      </div>
+
+      <div className="flex flex-col flex-1 overflow-y-scroll scrollbar-hide gap-1">
+        {cards.map((card) => (
+          <CardForEdit
+            onDelete={() => {}}
+            key={card.id}
+            card={card}
+            onChange={() => {}}
+          />
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default DeckEdit;
