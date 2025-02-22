@@ -4,10 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
 
 @Data
+@Document("deck")
 public class Deck {
     @Id
     public String id;
@@ -15,7 +17,8 @@ public class Deck {
     public String owner;
     public ArrayList<String> cards;
 
-    public Deck(String name, String owner, ArrayList<String> cards) {
+    public Deck(String id, String name, String owner, ArrayList<String> cards) {
+        this.id = id;
         this.name = name;
         this.owner = owner;
         this.cards = cards;

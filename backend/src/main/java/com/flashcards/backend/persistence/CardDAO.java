@@ -6,8 +6,8 @@ import com.flashcards.backend.model.Card;
 import java.util.ArrayList;
 
 public interface CardDAO extends MongoRepository<Card, String> {
-    public Card findCardById(String cardId);
     public ObjectId createCard(Card card);
+    public Card findCardById(String cardId);
     public boolean deleteCard(ObjectId cardId);
     public ArrayList<Card> findCardsBy(ArrayList<String> Ids);
     public Card updateCard(Card card);
