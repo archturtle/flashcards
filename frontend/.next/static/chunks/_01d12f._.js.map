@@ -1,0 +1,9 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 7, "column": 0}, "map": {"version":3,"sources":["file:///Users/kolbeyang/Documents/Programming/flashcards/frontend/src/app/page.tsx"],"sourcesContent":["\"use client\";\n\nimport { useRouter } from \"next/navigation\";\nimport { useEffect } from \"react\";\n\nconst HomePage = () => {\n  const router = useRouter();\n\n  useEffect(() => {\n    // TODO: check user signin\n    const isSignedIn = true;\n    if (isSignedIn) {\n      router.push(\"/decks\");\n    } else {\n      router.push(\"/login\");\n    }\n  }, []);\n\n  return null;\n};\n\nexport default HomePage;\n"],"names":[],"mappings":";;;AAEA;AACA;;AAHA;;;AAKA,MAAM,WAAW;;IACf,MAAM,SAAS,CAAA,GAAA,qIAAA,CAAA,YAAS,AAAD;IAEvB,CAAA,GAAA,6JAAA,CAAA,YAAS,AAAD;8BAAE;YACR,0BAA0B;YAC1B,MAAM,aAAa;YACnB,wCAAgB;gBACd,OAAO,IAAI,CAAC;YACd,OAAO;;YAEP;QACF;6BAAG,EAAE;IAEL,OAAO;AACT;GAdM;;QACW,qIAAA,CAAA,YAAS;;;KADpB;uCAgBS"}},
+    {"offset": {"line": 44, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"A"}},
+    {"offset": {"line": 54, "column": 0}, "map": {"version":3,"sources":["file:///Users/kolbeyang/Documents/Programming/flashcards/frontend/node_modules/next/navigation.js"],"sourcesContent":["module.exports = require('./dist/client/components/navigation')\n"],"names":[],"mappings":"AAAA,OAAO,OAAO","ignoreList":[0]}},
+    {"offset": {"line": 55, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"A"}}]
+}

@@ -1,0 +1,9 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 7, "column": 0}, "map": {"version":3,"sources":["file:///Users/kolbeyang/Documents/Programming/flashcards/frontend/src/components/Home/index.tsx"],"sourcesContent":["const Home = () => {\n  return <div className=\"flex\">HomeComponent</div>;\n};\n\nexport default Home;\n"],"names":[],"mappings":";;;;;AAAA,MAAM,OAAO;IACX,qBAAO,6LAAC;QAAI,WAAU;kBAAO;;;;;;AAC/B;KAFM;uCAIS"}},
+    {"offset": {"line": 29, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"A"}},
+    {"offset": {"line": 35, "column": 0}, "map": {"version":3,"sources":["file:///Users/kolbeyang/Documents/Programming/flashcards/frontend/src/app/page.tsx"],"sourcesContent":["\"use client\";\n\nimport Home from \"@/components/Home\";\n\nconst HomePage = () => {\n  return (\n    <div>\n      <Home />\n    </div>\n  );\n};\n\nexport default HomePage;\n"],"names":[],"mappings":";;;;AAEA;AAFA;;;AAIA,MAAM,WAAW;IACf,qBACE,6LAAC;kBACC,cAAA,6LAAC,sIAAA,CAAA,UAAI;;;;;;;;;;AAGX;KANM;uCAQS"}},
+    {"offset": {"line": 63, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"A"}}]
+}
