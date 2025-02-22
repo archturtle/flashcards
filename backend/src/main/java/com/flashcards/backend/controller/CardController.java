@@ -26,7 +26,7 @@ public class CardController {
         Card card = cardDAO.findCardById(id);
         try {
             if (card != null)
-                return new ResponseEntity<Card>(card, HttpStatus.OK);
+                return new ResponseEntity<>(card, HttpStatus.OK);
             else
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (Exception e) {

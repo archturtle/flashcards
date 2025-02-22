@@ -1,17 +1,15 @@
 package com.flashcards.backend.model;
 
 import org.springframework.data.annotation.Id;
-import lombok.Data;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Data
 @Document("user")
 public class User {
     @Id
-    public String id;
-    public String firstName;
-    public String lastName;
-    public String email;
+    private String id;
+    private String firstName;
+    private String lastName;
+    private String email;
 
     public User (String id, String firstName, String lastName, String email) {
         this.id = id;
@@ -20,10 +18,42 @@ public class User {
         this.email = email;
     }
 
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public String toString() {
         return String.format(
                 "User ID: %s\nFirst Name: %s\nLast Name: %s\nEmail: %s\n",
-                id, firstName, lastName
+                id, firstName, lastName, email
         );
     }
 }
