@@ -21,8 +21,8 @@ const Button = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f
             "text-xl px-[24px] py-[18px] rounded-[8px] gap-1": size === "md",
             "text-3xl px-[30px] py-[24px] rounded-[8px] gap-2": size === "lg",
             "text-4xl font-semibold px-[44px] py-[30px] rounded-[8px] gap-3": size === "xl",
-            "outline outline-subtle-03/50 bg-base text-text hover:bg-base-01 active:bg-subtle-01": variant === "default",
-            "outline outline-primary-06/50 bg-primary-03 text-primary-07 hover:bg-primary-04 active:bg-primary-05": variant === "primary",
+            "outline outline-base-05/50 bg-base text-text hover:bg-base-01 active:bg-subtle-01": variant === "default",
+            "bg-primary-03 text-text hover:bg-primary-04 active:bg-primary-05": variant === "primary",
             "outline-none bg-transparent hover:bg-subtle-03/15 active:bg-subtle-03/30": variant === "minimal",
             "opacity-70 cursor-not-allowed": isDisabled,
             "text-sm px-[8px] py-[8px] rounded-[4px] gap-1": size === "sm" && isIcon,
@@ -63,10 +63,10 @@ const DeckCard = ({ deck })=>{
     const { name, cards } = deck;
     const numCards = cards.length;
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-        className: "flex bg-primary-03 px-[20px] py-[16px] rounded-[8px] flex-col",
+        className: "flex bg-purple-03 px-[20px] py-[16px] rounded-[8px] flex-col leading-5",
         children: [
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
-                className: "text-[24px] font-bold text-text/50",
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "text-[20px] font-bold text-text-base/50",
                 children: [
                     numCards,
                     " cards"
@@ -76,12 +76,12 @@ const DeckCard = ({ deck })=>{
                 lineNumber: 12,
                 columnNumber: 7
             }, this),
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "text-[24px] font-bold",
                 children: name
             }, void 0, false, {
                 fileName: "[project]/src/components/Decks/DeckCard.tsx",
-                lineNumber: 13,
+                lineNumber: 15,
                 columnNumber: 7
             }, this)
         ]

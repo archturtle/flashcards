@@ -32,9 +32,9 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
             "text-4xl font-semibold px-[44px] py-[30px] rounded-[8px] gap-3":
               size === "xl",
 
-            "outline outline-subtle-03/50 bg-base text-text hover:bg-base-01 active:bg-subtle-01":
+            "outline outline-base-05/50 bg-base text-text hover:bg-base-01 active:bg-subtle-01":
               variant === "default",
-            "outline outline-primary-06/50 bg-primary-03 text-primary-07 hover:bg-primary-04 active:bg-primary-05":
+            "bg-primary-03 text-text hover:bg-primary-04 active:bg-primary-05":
               variant === "primary",
             "outline-none bg-transparent hover:bg-subtle-03/15 active:bg-subtle-03/30":
               variant === "minimal",
