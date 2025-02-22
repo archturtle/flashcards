@@ -38,13 +38,11 @@ public class CardController {
     @PostMapping("/create")
     public ResponseEntity<Card> createCard(@RequestBody Card card) throws IOException {
         try {
-            if (cardDAO.findCardById(card.getId()) == null) {
+                card.setId(null);
                 Card this_card = cardDAO.save(card);
                 return new ResponseEntity<>(this_card, HttpStatus.CREATED);
 
-            } else {
-                return new ResponseEntity<>(HttpStatus.CONFLICT);
-            }
+
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
