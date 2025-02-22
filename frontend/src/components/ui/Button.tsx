@@ -1,7 +1,7 @@
 import { cn } from "@/utils/classNameMerge";
 import { ButtonHTMLAttributes, forwardRef } from "react";
 
-interface ButtonProps
+export interface ButtonProps
   extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, "disabled"> {
   variant?: "primary" | "default" | "minimal";
   size?: "sm" | "md" | "lg" | "xl";
@@ -36,7 +36,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
               variant === "default",
             "bg-primary-03 text-text hover:bg-primary-04 active:bg-primary-05":
               variant === "primary",
-            "outline-none bg-transparent hover:bg-subtle-03/15 active:bg-subtle-03/30":
+            "outline-none bg-transparent hover:bg-base-06/15 active:bg-base-06/30":
               variant === "minimal",
 
             "opacity-70 cursor-not-allowed": isDisabled,

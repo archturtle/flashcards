@@ -4,3 +4,9 @@ export interface Deck {
   owner: string;
   cards: string[];
 }
+
+export interface Card {
+  id: string;
+  front: string;
+  back: string;
+}
