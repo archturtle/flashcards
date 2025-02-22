@@ -5,9 +5,8 @@ import { selectCardsByDeckId, selectDeckById } from "@/store/decks/module";
 import { IconArrowLeft, IconPlus } from "@tabler/icons-react";
 import { isNil } from "lodash";
 import { useRouter } from "next/navigation";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import CardForEdit from "./CardForEdit";
-import { AppDispatch } from "@/store/store";
 
 interface Props {
   id?: string;
@@ -15,7 +14,6 @@ interface Props {
 
 const DeckEdit = ({ id }: Props) => {
   const router = useRouter();
-  const dispatch = useDispatch<AppDispatch>();
 
   const deck = useSelector(!isNil(id) ? selectDeckById(id) : () => undefined);
 

@@ -34,14 +34,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <meta
-          name="google-adsense-account"
-          content="ca-pub-1198833545019540"
-        />
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1.0"
-        />
+        <meta name="google-adsense-account" content="ca-pub-1198833545019540" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </head>
       <body
         className={cn(
@@ -53,7 +47,7 @@ export default function RootLayout({
         <AuthProvider>
           <ReduxProvider>
             <ScreenContainer className="bg-base text-text flex flex-col items-center justify-between p-[2px] overflow-y-auto scrollbar-hide">
-              <div className="flex flex-col item-center max-w-[600px] lg:max-w-[800px] w-full flex-1">
+              <div className="flex px-5 flex-col item-center max-w-[600px] lg:max-w-[800px] w-full flex-1">
                 <div className="flex items-center gap-2 w-full px-2">
                   <IconCardsFilled />
                   <h3 className="font-bold text-[24px] text-center">
