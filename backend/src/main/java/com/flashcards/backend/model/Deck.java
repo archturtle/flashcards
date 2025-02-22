@@ -28,7 +28,7 @@ public class Deck {
     public String toString() {
         return String.format(
                 "Deck[id=%s, name='%s', owner=%s, cards=%s]",
-                id.toString(), name, ownerId.toString(), cards.toString()
+                id.toString(), name, owner.toString(), cards.toString()
         );
     }
 }
