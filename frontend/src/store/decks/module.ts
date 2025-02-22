@@ -1,7 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
 import { Card, Deck } from "./types";
-import { dummyCards, dummyDecks } from "./dummy";
+import { dummyCards, dummyDecks, email } from "./dummy";
 import { compact, isNil } from "lodash";
+import config from "../../../config";
 
 interface DecksState {
   decks: Deck[];
@@ -25,8 +27,26 @@ const initialState: DecksState = {
 };
 
 export const fetchDecks = createAsyncThunk("decks/fetch", async () => {
-  // TODO: implement
-  return [];
+  try {
+    const response = await axios.get(
+      `${config.api.development}/deck/fetch/${email}`,
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    return [];
+  }
+});
+
+export const createDeck = createAsyncThunk("decks/create", async () => {
+  try {
+    const response = await axios.get(
+      `${config.api.development}/deck/create/${email}`,
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
 });
 
 export const fetchCards = createAsyncThunk("decks/cards/fetch", async () => {

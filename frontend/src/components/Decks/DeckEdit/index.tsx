@@ -2,7 +2,7 @@
 
 import Button from "@/components/ui/Button";
 import { selectCardsByDeckId, selectDeckById } from "@/store/decks/module";
-import { IconArrowLeft } from "@tabler/icons-react";
+import { IconArrowLeft, IconPlus } from "@tabler/icons-react";
 import { isNil } from "lodash";
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
@@ -48,6 +48,10 @@ const DeckEdit = ({ id }: Props) => {
             onChange={() => {}}
           />
         ))}
+        <Button className="text-text-base/50 rounded-[12px]">
+          <IconPlus />
+          New card
+        </Button>
       </div>
     </div>
   );
