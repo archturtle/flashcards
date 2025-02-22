@@ -10,12 +10,12 @@ import java.util.ArrayList;
 @Data
 public class Deck {
     @Id
-    public ObjectId id;
+    public String id;
     public String name;
-    public ObjectId owner;
-    public ArrayList<ObjectId> cards;
+    public String owner;
+    public ArrayList<String> cards;
 
-    public Deck(String name, ObjectId owner, ArrayList<ObjectId> cards) {
+    public Deck(String name, String owner, ArrayList<String> cards) {
         this.name = name;
         this.owner = owner;
         this.cards = cards;
