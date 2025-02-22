@@ -7,12 +7,13 @@ import lombok.Data;
 
 public class Card {
     @Id
-    public ObjectId id;
+    public String id;
     public String front;
     public String back;
     public Card (String front, String back) {
             this.front = front; 
-            this.back = back;  
+            this.back = back;
+
     } 
 
     public void toString (Card card) {
@@ -21,5 +22,7 @@ public class Card {
         System.out.println("Back of the Card: " + this.back);
 
     }
+
+
 
 }
