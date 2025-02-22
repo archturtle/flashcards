@@ -7,7 +7,5 @@ import java.util.ArrayList;
 
 public interface DeckDAO extends MongoRepository<Deck, String> {
     public Deck findDeckById(String Id);
-    public boolean deleteDeckById(String Id);
-    public Deck updateDeck(Deck deck);
-    public ArrayList<Deck> findDecksByOwnerId(String owner);
+    public ArrayList<Deck> findDecksByOwner(String owner);
 }
