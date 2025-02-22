@@ -6,8 +6,6 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import java.util.ArrayList;
 
 public interface DeckDAO extends MongoRepository<Deck, String> {
-    public Deck findDeckById(String Id);
-    public boolean deleteDeckById(String Id);
-    public Deck updateDeck(Deck deck);
-    public ArrayList<Deck> findDecksByOwnerId(String owner);
+    Deck findDeckById(String Id);
+    ArrayList<Deck> findDecksByOwner(String owner);
 }

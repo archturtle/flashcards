@@ -1,20 +1,42 @@
 package com.flashcards.backend.model;
 
 import org.springframework.data.annotation.Id;
-import lombok.Data;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Data
 @Document("card")
 public class Card {
     @Id
-    public String id;
-    public String front;
-    public String back;
+    private String id;
+    private String front;
+    private String back;
 
     public Card (String id, String front, String back) {
         this.id = id;
         this.front = front;
+        this.back = back;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getFront() {
+        return front;
+    }
+
+    public void setFront(String front) {
+        this.front = front;
+    }
+
+    public String getBack() {
+        return back;
+    }
+
+    public void setBack(String back) {
         this.back = back;
     }
 
