@@ -1,9 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 7, "column": 0}, "map": {"version":3,"sources":["file:///Users/kolbeyang/Documents/Programming/flashcards/frontend/src/components/Login/index.tsx"],"sourcesContent":["\"use client\";\n\nconst Login = () => {\n  return <div>Login</div>;\n};\n\nexport default Login;\n"],"names":[],"mappings":";;;;AAAA;;AAEA,MAAM,QAAQ;IACZ,qBAAO,6LAAC;kBAAI;;;;;;AACd;KAFM;uCAIS"}},
-    {"offset": {"line": 29, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"A"}},
-    {"offset": {"line": 35, "column": 0}, "map": {"version":3,"sources":["file:///Users/kolbeyang/Documents/Programming/flashcards/frontend/src/app/login/page.tsx"],"sourcesContent":["\"use client\";\n\nimport Login from \"@/components/Login\";\n\nconst LoginPage = () => {\n  return <Login />;\n};\n\nexport default LoginPage;\n"],"names":[],"mappings":";;;;AAEA;AAFA;;;AAIA,MAAM,YAAY;IAChB,qBAAO,6LAAC,uIAAA,CAAA,UAAK;;;;;AACf;KAFM;uCAIS"}},
-    {"offset": {"line": 57, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"A"}}]
-}
