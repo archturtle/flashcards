@@ -35,7 +35,7 @@ public class CardController {
 
     }
 
-    @PostMapping("/create/")
+    @PostMapping("/create")
     public ResponseEntity<Card> createCard(@RequestBody Card card) throws IOException {
         try {
             if (cardDAO.findCardById(card.getId()) == null) {
@@ -79,6 +79,7 @@ public class CardController {
     }
 
     @PostMapping("/generate")
+    //This code is very shakey
     public ResponseEntity<String> generate(@RequestPart("file") MultipartFile file) {
         if (null == file.getOriginalFilename()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
