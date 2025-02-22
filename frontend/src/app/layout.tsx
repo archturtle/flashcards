@@ -32,26 +32,26 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <AuthProvider>
-      <ReduxProvider>
-        <html lang="en">
-          <head>
-            <meta
-              name="google-adsense-account"
-              content="ca-pub-1198833545019540"
-            />
-            <meta
-              name="viewport"
-              content="width=device-width, initial-scale=1.0"
-            />
-          </head>
-          <body
-            className={cn(
-              workSans.variable,
-              alegreya.variable,
-              "font-workSans font-alegreya antialiased",
-            )}
-          >
+    <html lang="en">
+      <head>
+        <meta
+          name="google-adsense-account"
+          content="ca-pub-1198833545019540"
+        />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1.0"
+        />
+      </head>
+      <body
+        className={cn(
+          workSans.variable,
+          alegreya.variable,
+          "font-workSans font-alegreya antialiased",
+        )}
+      >
+        <AuthProvider>
+          <ReduxProvider>
             <ScreenContainer className="bg-base text-text flex flex-col items-center justify-between p-[2px] overflow-y-auto scrollbar-hide">
               <div className="flex flex-col item-center max-w-[600px] lg:max-w-[800px] w-full">
                 <div className="flex items-center gap-2 w-full px-2">
@@ -63,9 +63,9 @@ export default function RootLayout({
                 {children}
               </div>
             </ScreenContainer>
-          </body>
-        </html>
-      </ReduxProvider>
-    </AuthProvider>
+          </ReduxProvider>
+        </AuthProvider>
+      </body>
+    </html>
   );
 }
