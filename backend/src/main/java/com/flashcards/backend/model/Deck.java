@@ -1,5 +1,6 @@
 package com.flashcards.backend.model;
 
+import jakarta.validation.constraints.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -7,10 +8,13 @@ import java.util.ArrayList;
 
 @Document("deck")
 public class Deck {
-    @Id
+    @Id @NotNull
     private String id;
+    @NotBlank
     private String name;
+    @NotBlank
     private String owner;
+    @NotNull
     private ArrayList<String> cards;
 
     public Deck(String id, String name, String owner, ArrayList<String> cards) {
