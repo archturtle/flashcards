@@ -26,11 +26,10 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         className={cn(
           "-outline-offset-1 font-medium bg-base flex flex-row justify-center items-center",
           {
-            "text-sm px-[12px] py-[8px] rounded-[4px] gap-1": size === "sm",
-            "text-[16px] px-[24px] py-[18px] rounded-[8px] gap-1":
-              size === "md",
-            "text-xl px-[30px] py-[24px] rounded-[8px] gap-2": size === "lg",
-            "text-3xl font-semibold px-[44px] py-[30px] rounded-[8px] gap-3":
+            "text-[16px] px-[12px] py-[8px] rounded-[4px] gap-1": size === "sm",
+            "text-xl px-[24px] py-[18px] rounded-[8px] gap-1": size === "md",
+            "text-3xl px-[30px] py-[24px] rounded-[8px] gap-2": size === "lg",
+            "text-4xl font-semibold px-[44px] py-[30px] rounded-[8px] gap-3":
               size === "xl",
 
             "outline outline-subtle-03/50 bg-base text-text hover:bg-base-01 active:bg-subtle-01":

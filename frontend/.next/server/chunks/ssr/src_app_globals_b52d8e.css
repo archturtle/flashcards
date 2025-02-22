@@ -305,8 +305,17 @@ img, video {
   display: flex;
 }
 
+.grid {
+  display: grid;
+}
+
 .hidden {
   display: none;
+}
+
+.size-full {
+  width: 100%;
+  height: 100%;
 }
 
 .h-screen {
@@ -333,12 +342,20 @@ img, video {
   width: 100vw;
 }
 
+.max-w-\[600px\] {
+  max-width: 600px;
+}
+
 .flex-1 {
   flex: 1;
 }
 
 .cursor-not-allowed {
   cursor: not-allowed;
+}
+
+.grid-cols-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .flex-row {
@@ -399,35 +416,12 @@ img, video {
 
 .bg-base {
   --tw-bg-opacity: 1;
-  background-color: rgb(230 238 230 / var(--tw-bg-opacity, 1));
+  background-color: rgb(243 237 232 / var(--tw-bg-opacity, 1));
 }
 
 .bg-primary-03 {
   --tw-bg-opacity: 1;
-  background-color: rgb(161 225 121 / var(--tw-bg-opacity, 1));
-}
-
-.bg-primary-05 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(130 222 73 / var(--tw-bg-opacity, 1));
-}
-
-.bg-subtle-01 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(197 212 207 / var(--tw-bg-opacity, 1));
-}
-
-.bg-subtle-03 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(166 185 179 / var(--tw-bg-opacity, 1));
-}
-
-.bg-subtle-03\/30 {
-  background-color: #a6b9b34d;
-}
-
-.bg-subtle-06\/15 {
-  background-color: #4b706526;
+  background-color: rgb(220 224 89 / var(--tw-bg-opacity, 1));
 }
 
 .bg-transparent {
@@ -440,6 +434,11 @@ img, video {
 
 .p-\[4px\] {
   padding: 4px;
+}
+
+.px-2 {
+  padding-left: .5rem;
+  padding-right: .5rem;
 }
 
 .px-5 {
@@ -455,6 +454,11 @@ img, video {
 .px-\[18px\] {
   padding-left: 18px;
   padding-right: 18px;
+}
+
+.px-\[20px\] {
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 .px-\[24px\] {
@@ -522,6 +526,14 @@ img, video {
   padding-bottom: 8px;
 }
 
+.text-center {
+  text-align: center;
+}
+
+.font-alegreya {
+  font-family: var(--font-alegreya), serif;
+}
+
 .font-workSans {
   font-family: var(--font-work-sans), sans-serif;
 }
@@ -536,12 +548,25 @@ img, video {
   line-height: 2.25rem;
 }
 
+.text-4xl {
+  font-size: 2.25rem;
+  line-height: 2.5rem;
+}
+
 .text-\[16px\] {
   font-size: 16px;
 }
 
 .text-\[20px\] {
   font-size: 20px;
+}
+
+.text-\[24px\] {
+  font-size: 24px;
+}
+
+.text-\[40px\] {
+  font-size: 40px;
 }
 
 .text-lg {
@@ -575,31 +600,6 @@ img, video {
   text-transform: capitalize;
 }
 
-.text-primary-07 {
-  --tw-text-opacity: 1;
-  color: rgb(4 152 0 / var(--tw-text-opacity, 1));
-}
-
-.text-subtle-03 {
-  --tw-text-opacity: 1;
-  color: rgb(166 185 179 / var(--tw-text-opacity, 1));
-}
-
-.text-subtle-05 {
-  --tw-text-opacity: 1;
-  color: rgb(104 134 125 / var(--tw-text-opacity, 1));
-}
-
-.text-subtle-06 {
-  --tw-text-opacity: 1;
-  color: rgb(75 112 101 / var(--tw-text-opacity, 1));
-}
-
-.text-text {
-  --tw-text-opacity: 1;
-  color: rgb(0 57 62 / var(--tw-text-opacity, 1));
-}
-
 .antialiased {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -624,18 +624,6 @@ img, video {
 
 .-outline-offset-1 {
   outline-offset: -1px;
-}
-
-.outline-primary-06\/50 {
-  outline-color: #10ba0b80;
-}
-
-.outline-subtle-03\/50 {
-  outline-color: #a6b9b380;
-}
-
-.outline-text\/50 {
-  outline-color: #00393e80;
 }
 
 .outline-transparent {
@@ -676,33 +664,6 @@ body {
   scrollbar-color: #cecacd transparent;
 }
 
-.placeholder\:text-subtle-03::placeholder {
-  --tw-text-opacity: 1;
-  color: rgb(166 185 179 / var(--tw-text-opacity, 1));
-}
-
-.hover\:bg-base-01:hover {
-  --tw-bg-opacity: 1;
-  background-color: rgb(211 224 211 / var(--tw-bg-opacity, 1));
-}
-
-.hover\:bg-primary-04:hover {
-  --tw-bg-opacity: 1;
-  background-color: rgb(147 222 100 / var(--tw-bg-opacity, 1));
-}
-
-.hover\:bg-subtle-03\/15:hover {
-  background-color: #a6b9b326;
-}
-
-.focus\:bg-subtle-06\/15:focus {
-  background-color: #4b706526;
-}
-
-.focus\:bg-subtle-06\/20:focus {
-  background-color: #4b706533;
-}
-
 .focus\:outline-\[3px\]:focus {
   outline-width: 3px;
 }
@@ -711,31 +672,19 @@ body {
   outline-offset: -3px;
 }
 
-.focus\:outline-primary-04:focus {
-  outline-color: #93de64;
-}
-
 .focus\:outline-transparent:focus {
   outline-color: #0000;
-}
-
-.active\:bg-primary-05:active {
-  --tw-bg-opacity: 1;
-  background-color: rgb(130 222 73 / var(--tw-bg-opacity, 1));
-}
-
-.active\:bg-subtle-01:active {
-  --tw-bg-opacity: 1;
-  background-color: rgb(197 212 207 / var(--tw-bg-opacity, 1));
-}
-
-.active\:bg-subtle-03\/30:active {
-  background-color: #a6b9b34d;
 }
 
 @media (width >= 640px) {
   .sm\:block {
     display: block;
+  }
+}
+
+@media (width >= 1024px) {
+  .lg\:max-w-\[800px\] {
+    max-width: 800px;
   }
 }
 

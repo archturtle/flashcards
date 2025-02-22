@@ -1,10 +1,10 @@
 // store/store.ts
 import { configureStore } from "@reduxjs/toolkit";
-import { foosActions } from "./foos/module";
+import { decksActions } from "./decks/module";
 
 export const store = configureStore({
   reducer: {
-    foos: foosActions, // Use your slice reducer here
+    decks: decksActions, // Use your slice reducer here
   },
 });
 

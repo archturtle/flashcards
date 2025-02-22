@@ -13,6 +13,7 @@ export default {
       colors,
       fontFamily: {
         workSans: ["var(--font-work-sans)", "sans-serif"],
+        alegreya: ["var(--font-alegreya)", "serif"],
       },
     },
   },

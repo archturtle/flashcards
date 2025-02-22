@@ -1,19 +1,11 @@
 const colors = {
-  base: "#e6eee6",
-  "base-01": "#d3e0d3",
-
-  text: "#00393e",
-
-  "subtle-01": "#c5d4cf",
-  "subtle-03": "#a6b9b3",
-  "subtle-05": "#68867d",
-  "subtle-06": "#4b7065",
-
-  "primary-03": "#a1e179",
-  "primary-04": "#93de64",
-  "primary-05": "#82de49",
-  "primary-06": "#10ba0b",
-  "primary-07": "#049800",
+  base: "#F3EDE8",
+  "primary-03": "#DCE059",
+  "purple-03": "#D199F0",
+  "mint-02": "#B7FCBF",
+  "forest-07": "#004638",
+  "blue-02": "#C7DDDC",
+  "text-base": "#2D0B0A",
 };
 
 export default colors;
