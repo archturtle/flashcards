@@ -96,8 +96,9 @@ public class CardController {
 
         try {
             if (cardDAO.findById(id).isPresent()) {
+                Card card = cardDAO.findById(id).get();
                 cardDAO.deleteById(id);
-                return new ResponseEntity<>(HttpStatus.OK);
+                return new ResponseEntity<>(card, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
