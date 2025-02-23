@@ -4,6 +4,7 @@ import { Card, Deck } from "./types";
 import { dummyCards, dummyDecks, email } from "./dummy";
 import { compact, isNil } from "lodash";
 import config from "../../../config";
+import axinst from "@/utils/axiosInstance";
 
 interface DecksState {
   decks: Deck[];
@@ -28,7 +29,7 @@ const initialState: DecksState = {
 
 export const fetchDecks = createAsyncThunk("decks/fetch", async () => {
   try {
-    const response = await axios.get(
+    const response = await axinst.get(
       `${config.api.development}/deck/fetch/${email}`,
     );
     return response.data;
@@ -40,7 +41,7 @@ export const fetchDecks = createAsyncThunk("decks/fetch", async () => {
 
 export const createDeck = createAsyncThunk("decks/create", async () => {
   try {
-    const response = await axios.get(
+    const response = await axinst.get(
       `${config.api.development}/deck/create/${email}`,
     );
     return response.data;
