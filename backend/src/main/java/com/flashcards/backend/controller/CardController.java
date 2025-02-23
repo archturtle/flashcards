@@ -101,7 +101,7 @@ public class CardController {
         }
     }
 
-    @PostMapping("/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Card> deleteCard(@PathVariable String id) {
         LOG.log(Level.INFO, "POST /delete/{0}", id);
 
