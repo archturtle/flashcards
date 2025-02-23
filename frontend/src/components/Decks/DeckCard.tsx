@@ -11,8 +11,7 @@ interface Props {
 }
 
 const DeckCard = ({ deck, onClick, onEditClick }: Props) => {
-  const { name, cards } = deck;
-  const numCards = cards.length;
+  const { name } = deck;
 
   const handleEditClick = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -33,9 +32,6 @@ const DeckCard = ({ deck, onClick, onEditClick }: Props) => {
       >
         <IconPencil size={30} className="text-text-base/50" />
       </Button>
-      <div className="text-[20px] font-bold text-text-base/50">
-        {numCards} cards
-      </div>
       <div className="text-[24px] font-bold text-text-base">{name}</div>
     </div>
   );
