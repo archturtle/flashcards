@@ -3,9 +3,10 @@ import { Card, Deck } from "@/store/decks/types";
 import { nanoid } from "@reduxjs/toolkit";
 import { IconChevronDown, IconPlus } from "@tabler/icons-react";
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Button from "../ui/Button";
 import CardForEdit from "../ui/CardForEdit";
+import { AppDispatch } from "@/store/store";
 
 interface Props {
   cards: Card[];
@@ -14,6 +15,7 @@ interface Props {
 
 const EditGeneratedCards = ({ cards, onCardsChange }: Props) => {
   const decks = useSelector(selectDecks);
+  const dispatch = useDispatch<AppDispatch>();
   const [targetDeck, setTargetDeck] = useState<Deck | null>(
     decks.at(0) ?? null,
   );
@@ -45,6 +47,8 @@ const EditGeneratedCards = ({ cards, onCardsChange }: Props) => {
     const newTargetDeck = decks.find((deck) => deck.id === id);
     if (newTargetDeck) setTargetDeck(newTargetDeck);
   };
+
+  const save = () => {};
 
   return (
     <div className="w-full flex-1 flex flex-col justify-between gap-2">
@@ -87,7 +91,11 @@ const EditGeneratedCards = ({ cards, onCardsChange }: Props) => {
             className="absolute right-[20px] top-1/2 -translate-y-1/2"
           />
         </div>
-        <Button variant="primary" className="text-[32px] font-bold">
+        <Button
+          variant="primary"
+          className="text-[32px] font-bold"
+          onClick={save}
+        >
           Save Cards
         </Button>
       </div>

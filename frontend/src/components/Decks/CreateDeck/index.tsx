@@ -16,7 +16,7 @@ const CreateDeck = () => {
   const dispatch = useDispatch<AppDispatch>();
 
   const onCreateDeck = () => {
-    dispatch(createDeck({ name, cards: [], id: "" }));
+    dispatch(createDeck({ name, id: "" }));
   };
 
   return (

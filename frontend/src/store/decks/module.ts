@@ -1,7 +1,6 @@
 import axinst from "@/utils/axiosInstance";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import config from "../../../config";
-import { email } from "./dummy";
 import { Card, Deck } from "./types";
 
 interface DecksState {
@@ -39,9 +38,7 @@ export const fetchDeck = createAsyncThunk("decks/fetch", async (id: string) => {
 
 export const fetchDecks = createAsyncThunk("decks/fetch-many", async () => {
   try {
-    const response = await axinst.get(
-      `${config.api.development}/deck/fetch`,
-    );
+    const response = await axinst.get(`${config.api.development}/deck/fetch`);
     return response.data;
   } catch (error) {
     console.error("Error fetching data:", error);
@@ -55,7 +52,7 @@ export const createDeck = createAsyncThunk(
     try {
       const response = await axinst.post(
         `${config.api.development}/deck/create`,
-        { ...deck, owner: email },
+        deck,
       );
       return response.data;
     } catch (error) {
