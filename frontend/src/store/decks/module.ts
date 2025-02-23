@@ -50,9 +50,15 @@ export const createDeck = createAsyncThunk("decks/create", async () => {
   }
 });
 
-export const fetchCards = createAsyncThunk("decks/cards/fetch", async () => {
-  // TODO: implement
-  return [];
+export const fetchCards = createAsyncThunk("cards/fetch", async (id: string) => {
+  try {
+    const response = await axinst.get(
+      `${config.api.development}/card/deck/${id}`
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching data:", error)
+  }
 });
 
 const decksSlice = createSlice({
