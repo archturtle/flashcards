@@ -4,7 +4,6 @@ import com.auth0.jwt.JWT;
 import com.flashcards.backend.model.Deck;
 import com.flashcards.backend.persistence.CardDAO;
 import com.flashcards.backend.persistence.DeckDAO;
-import com.flashcards.backend.persistence.UserDAO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,12 +18,10 @@ import java.util.logging.Logger;
 public class DeckController {
     private static final Logger LOG = Logger.getLogger(DeckController.class.getName());
     private DeckDAO deckDAO;
-    private UserDAO userDAO;
     private CardDAO cardDAO;
 
-    public DeckController(DeckDAO deckDAO, UserDAO userDAO, CardDAO cardDAO) {
+    public DeckController(DeckDAO deckDAO, CardDAO cardDAO) {
         this.deckDAO = deckDAO;
-        this.userDAO = userDAO;
         this.cardDAO = cardDAO;
     }
 
@@ -94,12 +91,8 @@ public class DeckController {
         String subject = getSubject(token);
 
         try {
-            if (userDAO.findUserBySubject(subject).isPresent()) {
-                ArrayList<Deck> decks = deckDAO.findDecksByOwner(subject);
-                return new ResponseEntity<>(decks, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            }
+            ArrayList<Deck> decks = deckDAO.findDecksByOwner(subject);
+            return new ResponseEntity<>(decks, HttpStatus.OK);
         } catch (Exception e) {
             LOG.log(Level.SEVERE, e.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
