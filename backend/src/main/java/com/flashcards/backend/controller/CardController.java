@@ -61,13 +61,14 @@ public class CardController {
 
     @PostMapping("/create-many")
     public ResponseEntity<ArrayList<Card>> createCards(@Valid @RequestBody ArrayList<Card> cards) {
-        LOG.log(Level.INFO, "POST /create-many {0}", card);
+        LOG.log(Level.INFO, "POST /create-many {0}", cards);
 
         try {
             for (Card card: cards) {
                 card.setId(null);
             }
-            ArrayList<Card> allCards = cardDAO.saveAll(cards);
+
+            ArrayList<Card> allCards = new ArrayList<>(cardDAO.saveAll(cards));
             return new ResponseEntity<>(allCards, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
