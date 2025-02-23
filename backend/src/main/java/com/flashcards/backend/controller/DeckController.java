@@ -76,13 +76,13 @@ public class DeckController {
         }
     }
 
-    @GetMapping("fetch/")
+    @GetMapping("fetch")
     public ResponseEntity<ArrayList<Deck>> fetchDecks() {
-        String email = "fss5045@g.rit.edu"
+        String email = "auth0|67ba350cfcff86680157adbc";
         LOG.log(Level.INFO, "POST /deck/fetch/{0}", email);
 
         try {
-            if (userDAO.findUserByEmail(email).isPresent()) {
+            if (userDAO.findUserBySubject(email).isPresent()) {
                 ArrayList<Deck> decks = deckDAO.findDecksByOwner(email);
                 return new ResponseEntity<>(decks, HttpStatus.OK);
             } else {
@@ -99,8 +99,8 @@ public class DeckController {
         LOG.log(Level.INFO, "POST /deck/fetch/{0}", id);
 
         try {
-            if (userDAO.findUserById(id).isPresent()) {
-                Deck deck = deckDAO.findDecksById(id);
+            if (deckDAO.findById(id).isPresent()) {
+                Deck deck = deckDAO.findById(id).get();
                 return new ResponseEntity<>(deck, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);

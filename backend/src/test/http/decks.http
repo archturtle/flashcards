@@ -1,5 +1,6 @@
 ### GET ALL DECKS
-GET http://localhost:8080/deck/fetch/fss5045@g.rit.edu
+GET http://localhost:8080/deck/fetch
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ik5MVEh3ak1ZYU50RXlaN3dObWJhZyJ9.eyJpc3MiOiJodHRwczovL2ZsYXNoY2FyZHMtYmgxMS51cy5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NjdiYTM1MGNmY2ZmODY2ODAxNTdhZGJjIiwiYXVkIjpbImh0dHBzOi8vZmxhc2hjYXJkcy1iaDExLnVzLmF1dGgwLmNvbS9hcGkvdjIvIiwiaHR0cHM6Ly9mbGFzaGNhcmRzLWJoMTEudXMuYXV0aDAuY29tL3VzZXJpbmZvIl0sImlhdCI6MTc0MDI3OTEwOSwiZXhwIjoxNzQwMzY1NTA5LCJzY29wZSI6Im9wZW5pZCBwcm9maWxlIGVtYWlsIiwiYXpwIjoibk5DeFEzb0pJOVZoTXp1a21oSExpajJyaGlCNDZJSXgifQ.X0AsCRjj-8WyqYj3WmwWGEVIfg8UhrxEH7xVM2fFSCkT12HHGLVEsRXvZhAHJxahDtRpKVbRYonhu6L3ygIRpKObFizDhcZBofKxaQqIO7hD-B4TFdGs324ZmS_YUPburFxM88TFPpqpPTuORoy4n6Bqth0JINmyGYnbrAnRT5l4ycMrqv6ferTrbUkD9FKgMUNFS1cKuJPK4GdCom1QFxdqEAkxwjjHNCBk5bn4F3_D18lrkc66j4qYjnV4MkSMOUoClBVHIf6sY2wHD5AJpeMX-deb67HXfS1E0UWoF2_810OxbkErSdIbjbl68hSc2X9bKbZzIFaAJdLYt-o8NQ
 ###
 
 ### POST FIRST DECK
@@ -8,9 +9,8 @@ Content-Type: application/json
 
 {
   "id": "",
-  "name": "Finn's First Deck",
-  "owner": "fss5045@g.rit.edu",
-  "cards": []
+  "name": "Finn's Second Deck",
+  "owner": "fss5045@g.rit.edu"
 }
 
 > {%

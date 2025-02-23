@@ -39,7 +39,9 @@ export const fetchDeck = createAsyncThunk("decks/fetch", async (id: string) => {
 
 export const fetchDecks = createAsyncThunk("decks/fetch-many", async () => {
   try {
-    const response = await axinst.get(`${config.api.development}/deck/fetch}`);
+    const response = await axinst.get(
+      `${config.api.development}/deck/fetch`,
+    );
     return response.data;
   } catch (error) {
     console.error("Error fetching data:", error);

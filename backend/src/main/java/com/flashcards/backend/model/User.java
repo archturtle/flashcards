@@ -9,13 +9,13 @@ public class User {
     private String id;
     private String firstName;
     private String lastName;
-    private String email;
+    private String subject;
 
-    public User (String id, String firstName, String lastName, String email) {
+    public User (String id, String firstName, String lastName, String subject) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.email = email;
+        this.subject = subject;
     }
 
     public String getFirstName() {
@@ -34,12 +34,12 @@ public class User {
         this.lastName = lastName;
     }
 
-    public String getEmail() {
-        return email;
+    public String getSubject() {
+        return subject;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setSubject(String subject) {
+        this.subject = subject;
     }
 
     public String getId() {
@@ -52,8 +52,8 @@ public class User {
 
     public String toString() {
         return String.format(
-                "User ID: %s\nFirst Name: %s\nLast Name: %s\nEmail: %s\n",
-                id, firstName, lastName, email
+                "User[ID: %s, First Name: %s, Last Name: %s, Subject: %s]\n",
+                id, firstName, lastName, subject
         );
     }
 }

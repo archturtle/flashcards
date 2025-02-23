@@ -1,5 +1,27 @@
 ### GET request to example server
 GET http://localhost:8080/card/get/67ba5208b87c563ea10c4f83
-
+###
 
 ###
+POST http://localhost:8080/card/create
+Content-Type: application/json
+
+{
+  "id": "",
+  "front": "{{$random.alphabetic(20)}}",
+  "back": "{{$random.alphabetic(10)}}",
+  "deckId": "67ba88419bfa3b24ab077e22"
+}
+###
+
+###
+POST http://localhost:8080/card/generate
+Content-Type: multipart/form-data; boundary=boundary
+
+--boundary
+Content-Disposition: form-data; name="file"; filename="08b-math-extra.key.pdf"
+Content-Type: application/pdf
+
+< /Users/siddharthajuluru/Documents/College/Spring-25/CSCI-510/lectures/08b-math-extra.key.pdf
+
+--boundary--

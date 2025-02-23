@@ -14,15 +14,6 @@ public class Deck {
     private String name;
     @NotBlank
     private String owner;
-//    @NotNull
-//    private ArrayList<String> cards;
-
-//    public Deck(String id, String name, String owner, ArrayList<String> cards) {
-//        this.id = id;
-//        this.name = name;
-//        this.owner = owner;
-//        this.cards = cards;
-//    }
 
     public Deck(String id, String name, String owner) {
         this.id = id;
@@ -54,20 +45,8 @@ public class Deck {
         this.owner = owner;
     }
 
-//    public ArrayList<String> getCards() {
-//        return cards;
-//    }
-//
-//    public void setCards(ArrayList<String> cards) {
-//        this.cards = cards;
-//    }
-
     @Override
     public String toString() {
-//        return String.format(
-//                "Deck[id=%s, name='%s', owner=%s, cards=%s]",
-//                id, name, owner, cards.toString()
-//        );
         return String.format(
                 "Deck[id=%s, name='%s', owner=%s]",
                 id, name, owner

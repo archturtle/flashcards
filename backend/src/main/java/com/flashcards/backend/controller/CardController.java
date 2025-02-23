@@ -135,13 +135,13 @@ public class CardController {
     }
 
     @PostMapping(path="/generate", produces=MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> generate(@RequestPart("file") MultipartFile file, @RequestPart("prompt") String userPrompt) {
+    public ResponseEntity<String> generate(@RequestPart(name="file", required=false) MultipartFile file, @RequestPart("prompt") String userPrompt) {
         LOG.log(Level.INFO, "POST /generate", file);
         ArrayList<Media> medias = new ArrayList<>();
         String generationPrompt;
         try {
-        if (file.isEmpty()) {
-            generationPrompt = String.format(
+            if (file == null) {
+                generationPrompt = String.format(
                     """
                     Given the topic: %s generate flash cards in this format:
                     [
@@ -161,39 +161,40 @@ public class CardController {
                     ]
                     
                     Make sure to only include the JSON and not anything else.
-                
-                    """, userPrompt);
-        } else {
-             generationPrompt = String.format(
-                    """
-                    Given my lecture notes attached, generate some flash cards in this format:
-                    [
-                      {
-                        "front": "front text",
-                        "back": "back"
-                      },
-                      {
-                        "front": "front text",
-                        "back": "back"
-                      },
-                      {
-                        "front": "front text",
-                        "back": "back"
-                      },
-                      ...
-                    ]
                     
-                    Make sure to only include the JSON and not anything else.
-                
-                    If information is repeated, give general topic info instead.
-                    
-                    Please pay special attention to these instructions: %s
-                    """, userPrompt);
+                    """, userPrompt
+                );
+            } else {
+                generationPrompt = String.format(
+                       """
+                       Given my lecture notes attached, generate some flash cards in this format:
+                       [
+                         {
+                           "front": "front text",
+                           "back": "back"
+                         },
+                         {
+                           "front": "front text",
+                           "back": "back"
+                         },
+                         {
+                           "front": "front text",
+                           "back": "back"
+                         },
+                         ...
+                       ]
+                       
+                       Make sure to only include the JSON and not anything else.
+                   
+                       If information is repeated, give general topic info instead.
+                       
+                       Please pay special attention to these instructions: %s
+                       """, userPrompt
+                );
 
                 PDDocument document = PDDocument.load(file.getBytes());
                 PDFRenderer renderer = new PDFRenderer(document);
                 PDPageTree pages = document.getPages();
-
 
                 for (PDPage page : pages) {
                     int pageIndex = document.getPages().indexOf(page);
@@ -205,7 +206,8 @@ public class CardController {
                             new ByteArrayResource(baos.toByteArray())
                     ));
                 }
-        }
+            }
+
             UserMessage userMessage = new UserMessage(generationPrompt, medias);
             Prompt prompt = new Prompt(userMessage);
             String response = chatClient.prompt(prompt).call().content();
@@ -216,6 +218,7 @@ public class CardController {
                 return new ResponseEntity<>(response, HttpStatus.OK);
             }
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
