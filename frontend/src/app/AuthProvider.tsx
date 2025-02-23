@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { Auth0Provider } from "@auth0/auth0-react";
 import { ReactNode } from "react";
+import AuthProviderSetup from "@/components/authProviderSetup";
 
 interface Props {
   children: ReactNode;
@@ -27,6 +28,7 @@ const AuthProvider = ({ children }: Props) => {
 				// scope: "openid profile email"
 			}}
     >
+      <AuthProviderSetup />
       {children}
     </Auth0Provider>
   );

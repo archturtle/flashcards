@@ -4,6 +4,7 @@ import { compact, isNil } from "lodash";
 import config from "../../../config";
 import { email } from "./dummy";
 import { Card, Deck } from "./types";
+import axinst from "@/utils/axiosInstance";
 
 interface DecksState {
   decks: Deck[];
@@ -28,7 +29,7 @@ const initialState: DecksState = {
 
 export const fetchDecks = createAsyncThunk("decks/fetch", async () => {
   try {
-    const response = await axios.get(
+    const response = await axinst.get(
       `${config.api.development}/deck/fetch/${email}`,
     );
     return response.data;
@@ -42,7 +43,7 @@ export const createDeck = createAsyncThunk(
   "decks/create",
   async (deck: Partial<Deck>) => {
     try {
-      const response = await axios.post(
+      const response = await axinst.post(
         `${config.api.development}/deck/create`,
         { ...deck, owner: email },
       );
@@ -53,10 +54,19 @@ export const createDeck = createAsyncThunk(
   },
 );
 
-export const fetchCards = createAsyncThunk("decks/cards/fetch", async () => {
-  // TODO: implement
-  return [];
-});
+export const fetchCards = createAsyncThunk(
+  "cards/fetch",
+  async (id: string) => {
+    try {
+      const response = await axinst.get(
+        `${config.api.development}/card/deck/${id}`,
+      );
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  },
+);
 
 export const createCard = createAsyncThunk(
   "cards/create",

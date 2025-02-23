@@ -1,6 +1,7 @@
 package com.flashcards.backend.controller;
 
 import com.flashcards.backend.model.Deck;
+import com.flashcards.backend.persistence.CardDAO;
 import com.flashcards.backend.persistence.DeckDAO;
 import com.flashcards.backend.persistence.UserDAO;
 import org.springframework.http.HttpStatus;
@@ -18,10 +19,12 @@ public class DeckController {
     private static final Logger LOG = Logger.getLogger(DeckController.class.getName());
     private DeckDAO deckDAO;
     private UserDAO userDAO;
+    private CardDAO cardDAO;
 
-    public DeckController(DeckDAO deckDAO, UserDAO userDAO) {
+    public DeckController(DeckDAO deckDAO, UserDAO userDAO, CardDAO cardDAO) {
         this.deckDAO = deckDAO;
         this.userDAO = userDAO;
+        this.cardDAO = cardDAO;
     }
 
     @PostMapping("create")
@@ -30,7 +33,6 @@ public class DeckController {
 
         try {
             deck.setId(null);
-            deck.setCards(new ArrayList<>());
             Deck new_deck = deckDAO.save(deck);
             return new ResponseEntity<>(new_deck, HttpStatus.CREATED);
         } catch (Exception e) {
@@ -45,6 +47,7 @@ public class DeckController {
 
         try {
             if (deckDAO.findById(deckId).isPresent()) {
+                cardDAO.deleteCardsByDeckId(deckId);
                 deckDAO.deleteById(deckId);
                 return new ResponseEntity<>(deckId, HttpStatus.OK);
             } else {

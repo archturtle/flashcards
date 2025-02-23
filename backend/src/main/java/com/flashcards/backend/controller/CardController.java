@@ -2,18 +2,26 @@ package com.flashcards.backend.controller;
 
 import com.flashcards.backend.model.Card;
 import com.flashcards.backend.persistence.CardDAO;
-import org.springframework.boot.logging.LogLevel;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDPageTree;
+import org.apache.pdfbox.rendering.PDFRenderer;
+import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.chat.messages.UserMessage;
+import org.springframework.ai.chat.prompt.Prompt;
+import org.springframework.ai.model.Media;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.MimeType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.validation.Valid;
-import java.io.IOException;
-import java.lang.reflect.Array;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+
+import javax.imageio.ImageIO;
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.logging.Level;
@@ -24,18 +32,36 @@ import java.util.logging.Logger;
 public class CardController {
     private static final Logger LOG = Logger.getLogger(CardController.class.getName());
     private CardDAO cardDAO;
+    private ChatClient chatClient;
 
-    public CardController(CardDAO cardDAO) {
+    public CardController(CardDAO cardDAO, ChatClient.Builder builder) {
         this.cardDAO = cardDAO;
+        this.chatClient = builder.build();
     }
 
-    @GetMapping("/get/{id}")
-    public ResponseEntity<ArrayList<Card>> getCardById(@PathVariable String id) {
-        LOG.log(Level.INFO, "GET /get/{0}", id);
+//    @GetMapping("/get/{id}")
+//    public ResponseEntity<ArrayList<Card>> getCardById(@PathVariable String id) {
+//        LOG.log(Level.INFO, "GET /get/{0}", id);
+//
+//        try {
+//            ArrayList<String> ids = new ArrayList<>(Arrays.asList(id.split(",")));
+//            ArrayList<Card> cards = new ArrayList<>(cardDAO.findAllById(ids));
+//            if (!cards.isEmpty()) {
+//                return new ResponseEntity<>(cards, HttpStatus.OK);
+//            } else {
+//                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//            }
+//        } catch (Exception e) {
+//            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
+//    }
+
+    @GetMapping("/deck/{deckId}")
+    public ResponseEntity<ArrayList<Card>> getCardsByDeckId(@PathVariable String deckId) {
+        LOG.log(Level.INFO, "GET /deck/{0}", deckId);
 
         try {
-            ArrayList<String> ids = new ArrayList<>(Arrays.asList(id.split(",")));
-            ArrayList<Card> cards = new ArrayList<>(cardDAO.findAllById(ids));
+            ArrayList<Card> cards = new ArrayList<>(cardDAO.findCardsByDeckId(deckId));
             if (!cards.isEmpty()) {
                 return new ResponseEntity<>(cards, HttpStatus.OK);
             } else {
@@ -108,23 +134,68 @@ public class CardController {
         }
     }
 
-    @PostMapping("/generate")
-    //This code is very shakey
-    public ResponseEntity<String> generate(@RequestPart("file") MultipartFile file) {
+    @PostMapping(path="/generate", produces=MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> generate(@RequestPart("file") MultipartFile file, @RequestPart("prompt") String userPrompt) {
         LOG.log(Level.INFO, "POST /generate", file);
-
-        if (null == file.getOriginalFilename()) {
+        if (file.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        try {
-            byte[] bytes = file.getBytes();
-            Path path = Paths.get(file.getOriginalFilename());
-            Files.write(path, bytes);
-            System.out.println(path.getFileName());
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
+
+        String file_prompt = String.format(
+            """
+            Given my lecture notes attached, generate some flash cards in this format:
+            [
+              {
+                "front": "front text",
+                "back": "back"
+              },
+              {
+                "front": "front text",
+                "back": "back"
+              },
+              {
+                "front": "front text",
+                "back": "back"
+              },
+              ...
+            ]
+            
+            Make sure to only include the JSON and not anything else.
+        
+            If information is repeated, give general topic info instead.
+            
+            Please pay special attention to these instructions: %s
+            """, userPrompt);
+
+
+        try (PDDocument document = PDDocument.load(file.getBytes())) {
+            PDFRenderer renderer = new PDFRenderer(document);
+            PDPageTree pages = document.getPages();
+            ArrayList<Media> medias = new ArrayList<>();
+
+            for (PDPage page : pages) {
+                int pageIndex = document.getPages().indexOf(page);
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                ImageIO.write(renderer.renderImageWithDPI(pageIndex, 300), "PNG", baos);
+
+                medias.add(new Media(
+                        MimeType.valueOf("image/png"),
+                        new ByteArrayResource(baos.toByteArray())
+                ));
+            }
+
+            UserMessage userMessage = new UserMessage(file_prompt, medias);
+            Prompt prompt = new Prompt(userMessage);
+            String response = chatClient.prompt(prompt).call().content();
+            if (response == null || response.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            } else {
+                response = response.substring(response.indexOf('['), response.indexOf(']') + 1);
+                return new ResponseEntity<>(response, HttpStatus.OK);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity<>("Good Job", HttpStatus.OK);
     }
 }
 
