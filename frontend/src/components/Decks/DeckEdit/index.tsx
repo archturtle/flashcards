@@ -4,6 +4,7 @@ import Button from "@/components/ui/Button";
 import {
   createCard,
   deleteCard,
+  fetchDeck,
   selectCardsByDeckId,
   selectDeckById,
   updateCard,
@@ -15,6 +16,7 @@ import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import CardForEdit from "../../ui/CardForEdit";
 import { Card } from "@/store/decks/types";
+import { useEffect } from "react";
 
 interface Props {
   id?: string;
@@ -29,6 +31,10 @@ const DeckEdit = ({ id }: Props) => {
   const cards = useSelector(
     !isNil(deck?.id) ? selectCardsByDeckId(deck?.id) : () => [],
   );
+
+  useEffect(() => {
+    dispatch(id ? () => fetchDeck(id) : () => {});
+  }, []);
 
   const onCreateCard = () => {
     if (deck)

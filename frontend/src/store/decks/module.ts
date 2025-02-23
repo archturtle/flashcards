@@ -193,6 +193,10 @@ const decksSlice = createSlice({
         state.isFetchCardsLoading = false;
         state.fetchCardsError = action.error.message ?? "Error fetching cards";
       })
+      .addCase(fetchDeck.fulfilled, (state, action) => {
+        const newDeck = action.payload;
+        return { ...state, decks: [newDeck] };
+      })
       .addCase(createDeck.fulfilled, (state, action) => {
         const newDeck = action.payload;
         return { ...state, decks: [...state.decks, newDeck] };
@@ -203,6 +207,7 @@ const decksSlice = createSlice({
       })
       .addCase(deleteCard.fulfilled, (state, action) => {
         const deletedCardId = action.payload;
+        console.log("the deletedcardid is", deletedCardId);
         return {
           ...state,
           cards: state.cards.filter((card) => card.id !== deletedCardId),

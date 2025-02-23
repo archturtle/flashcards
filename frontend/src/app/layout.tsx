@@ -24,7 +24,7 @@ const workSans = Work_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Smart Cards",
+  title: "Study Buddy AI",
   description: "Smart Flashcard App",
 };
 
@@ -55,7 +55,7 @@ export default function RootLayout({
                     <div className="flex items-center gap-2">
                       <IconCardsFilled />
                       <h3 className="font-bold text-[24px] text-center">
-                        Smart Cards
+                        Study Buddy AI
                       </h3>
                     </div>
                     <Profile className="px-[20px] py-[4px]" />

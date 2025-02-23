@@ -1,11 +1,16 @@
 import Button from "@/components/ui/Button";
-import { selectCardsByDeckId, selectDeckById } from "@/store/decks/module";
+import {
+  fetchDeck,
+  selectCardsByDeckId,
+  selectDeckById,
+} from "@/store/decks/module";
+import { AppDispatch } from "@/store/store";
 import { cn } from "@/utils/classNameMerge";
 import { IconArrowLeft, IconArrowRight } from "@tabler/icons-react";
 import { clamp, isNil } from "lodash";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 interface Props {
   id?: string;
@@ -15,12 +20,17 @@ const DeckStudy = ({ id }: Props) => {
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
   const [isFront, setIsFront] = useState(true);
   const router = useRouter();
+  const dispatch = useDispatch<AppDispatch>();
 
   const deck = useSelector(!isNil(id) ? selectDeckById(id) : () => undefined);
 
   const cards = useSelector(
     !isNil(deck?.id) ? selectCardsByDeckId(deck?.id) : () => [],
   );
+
+  useEffect(() => {
+    dispatch(id ? () => fetchDeck(id) : () => {});
+  }, [dispatch]);
 
   useEffect(() => {
     setCurrentCardIndex(0);
