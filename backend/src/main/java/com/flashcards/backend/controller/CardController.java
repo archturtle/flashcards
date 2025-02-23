@@ -1,5 +1,6 @@
 package com.flashcards.backend.controller;
 
+import com.auth0.jwt.JWT;
 import com.flashcards.backend.model.Card;
 import com.flashcards.backend.persistence.CardDAO;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -57,8 +58,9 @@ public class CardController {
 //    }
 
     @GetMapping("/deck/{deckId}")
-    public ResponseEntity<ArrayList<Card>> getCardsByDeckId(@PathVariable String deckId) {
+    public ResponseEntity<ArrayList<Card>> getCardsByDeckId(@PathVariable String deckId, @RequestHeader("Authorization") String token) {
         LOG.log(Level.INFO, "GET /deck/{0}", deckId);
+        if (token == null) { return new ResponseEntity<>(HttpStatus.UNAUTHORIZED); }
 
         try {
             ArrayList<Card> cards = new ArrayList<>(cardDAO.findCardsByDeckId(deckId));
@@ -73,8 +75,9 @@ public class CardController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Card> createCard(@Valid @RequestBody Card card) {
+    public ResponseEntity<Card> createCard(@Valid @RequestBody Card card, @RequestHeader("Authorization") String token) {
         LOG.log(Level.INFO, "POST /create {0}", card);
+        if (token == null) { return new ResponseEntity<>(HttpStatus.UNAUTHORIZED); }
 
         try {
             card.setId(null);
@@ -86,8 +89,9 @@ public class CardController {
     }
 
     @PostMapping("/create-many")
-    public ResponseEntity<ArrayList<Card>> createCards(@Valid @RequestBody ArrayList<Card> cards) {
+    public ResponseEntity<ArrayList<Card>> createCards(@Valid @RequestBody ArrayList<Card> cards, @RequestHeader("Authorization") String token) {
         LOG.log(Level.INFO, "POST /create-many {0}", cards);
+        if (token == null) { return new ResponseEntity<>(HttpStatus.UNAUTHORIZED); }
 
         try {
             for (Card card: cards) {
@@ -102,8 +106,9 @@ public class CardController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Card> deleteCard(@PathVariable String id) {
+    public ResponseEntity<Card> deleteCard(@PathVariable String id, @RequestHeader("Authorization") String token) {
         LOG.log(Level.INFO, "POST /delete/{0}", id);
+        if (token == null) { return new ResponseEntity<>(HttpStatus.UNAUTHORIZED); }
 
         try {
             if (cardDAO.findById(id).isPresent()) {
@@ -118,8 +123,9 @@ public class CardController {
     }
 
     @PostMapping("/update")
-    public ResponseEntity<Card> updateCard(@Valid @RequestBody Card card) {
+    public ResponseEntity<Card> updateCard(@Valid @RequestBody Card card, @RequestHeader("Authorization") String token) {
         LOG.log(Level.INFO, "POST /update/{0}", card);
+        if (token == null) { return new ResponseEntity<>(HttpStatus.UNAUTHORIZED); }
 
         try {
             if (cardDAO.findById(card.getId()).isPresent()) {
