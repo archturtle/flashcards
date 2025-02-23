@@ -11,11 +11,12 @@ const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
     return (
       <textarea
         className={cn(
-          "focus:outline bg-base-06/15 text-text-base placeholder:text-subtle-03 focus:-outline-offset-[3px] focus:bg-base-06/30 focus:outline-primary-03 focus:outline-[3px]",
+          "focus:outline bg-base-06/15 text-text-base placeholder:text-subtle-03 focus:-outline-offset-[3px] focus:bg-base-06/30 focus:outline-primary-03 focus:outline-[3px] scrollbar-hide",
           {},
           className,
         )}
         ref={ref}
+        rows={4}
         disabled={isDisabled}
         {...props}
       />
