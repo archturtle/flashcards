@@ -1,10 +1,8 @@
+import axinst from "@/utils/axiosInstance";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
-import { compact, isNil } from "lodash";
 import config from "../../../config";
 import { email } from "./dummy";
 import { Card, Deck } from "./types";
-import axinst from "@/utils/axiosInstance";
 
 interface DecksState {
   decks: Deck[];
@@ -70,9 +68,9 @@ export const fetchCards = createAsyncThunk(
 
 export const createCard = createAsyncThunk(
   "cards/create",
-  async (card: Partial<Card>) => {
+  async (card: Card) => {
     try {
-      const response = await axios.post(
+      const response = await axinst.post(
         `${config.api.development}/card/create`,
         card,
       );
@@ -133,13 +131,7 @@ export const selectCards = (state: { decks: DecksState }) => state.decks.cards;
 
 export const selectCardsByDeckId =
   (id: string) => (state: { decks: DecksState }) => {
-    const deck = state.decks.decks.find((deck) => deck.id === id);
-    if (isNil(deck)) return [];
-    const cardIds = deck.cards;
-    const cards = state.decks.cards;
-    return compact(
-      cardIds.map((cardId) => cards.find((card) => card.id === cardId)),
-    );
+    return state.decks.cards.filter((card) => card.deckId === id);
   };
 
 export const decksActions = decksSlice.reducer;

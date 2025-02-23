@@ -6,13 +6,12 @@ import {
   selectCardsByDeckId,
   selectDeckById,
 } from "@/store/decks/module";
+import { AppDispatch } from "@/store/store";
 import { IconArrowLeft, IconPlus } from "@tabler/icons-react";
 import { isNil } from "lodash";
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import CardForEdit from "../../ui/CardForEdit";
-import { AppDispatch } from "@/store/store";
-import router from "next/router";
 
 interface Props {
   id?: string;
@@ -29,7 +28,15 @@ const DeckEdit = ({ id }: Props) => {
   );
 
   const onCreateCard = () => {
-    dispatch(createCard({ front: "", back: "" }));
+    if (deck)
+      dispatch(
+        createCard({
+          front: "Front",
+          back: "Back",
+          id: "",
+          deckId: deck.id,
+        }),
+      );
   };
 
   if (isNil(deck)) return "Deck is not defined";
