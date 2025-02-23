@@ -39,7 +39,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
             "outline-none bg-transparent hover:bg-base-06/15 active:bg-base-06/30":
               variant === "minimal",
 
-            "opacity-70 cursor-not-allowed": isDisabled,
+            "opacity-70 cursor-not-allowed text-text-base/20": isDisabled,
 
             "text-sm px-[8px] py-[8px] rounded-[4px] gap-1":
               size === "sm" && isIcon,

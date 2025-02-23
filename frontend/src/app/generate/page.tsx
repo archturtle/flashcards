@@ -1,11 +1,7 @@
 import Generate from "@/components/Generate";
 
 const GeneratePage = () => {
-  return (
-    <div className="flex">
-      <Generate />
-    </div>
-  );
+  return <Generate />;
 };
 
 export default GeneratePage;

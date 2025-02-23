@@ -1,9 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { Card, Deck } from "./types";
-import { dummyCards, dummyDecks, email } from "./dummy";
 import { compact, isNil } from "lodash";
 import config from "../../../config";
+import { email } from "./dummy";
+import { Card, Deck } from "./types";
 
 interface DecksState {
   decks: Deck[];
@@ -17,11 +17,11 @@ interface DecksState {
 
 const initialState: DecksState = {
   // TOOD: replace with real decks
-  decks: dummyDecks,
+  decks: [],
   isFetchDecksLoading: false,
   fetchDecksError: null,
 
-  cards: dummyCards,
+  cards: [],
   isFetchCardsLoading: false,
   fetchCardsError: null,
 };
@@ -38,21 +38,40 @@ export const fetchDecks = createAsyncThunk("decks/fetch", async () => {
   }
 });
 
-export const createDeck = createAsyncThunk("decks/create", async () => {
-  try {
-    const response = await axios.get(
-      `${config.api.development}/deck/create/${email}`,
-    );
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching data:", error);
-  }
-});
+export const createDeck = createAsyncThunk(
+  "decks/create",
+  async (deck: Partial<Deck>) => {
+    try {
+      const response = await axios.post(
+        `${config.api.development}/deck/create`,
+        { ...deck, owner: email },
+      );
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  },
+);
 
 export const fetchCards = createAsyncThunk("decks/cards/fetch", async () => {
   // TODO: implement
   return [];
 });
+
+export const createCard = createAsyncThunk(
+  "cards/create",
+  async (card: Partial<Card>) => {
+    try {
+      const response = await axios.post(
+        `${config.api.development}/card/create`,
+        card,
+      );
+      return response.data;
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  },
+);
 
 const decksSlice = createSlice({
   name: "decks",
@@ -83,6 +102,14 @@ const decksSlice = createSlice({
       .addCase(fetchCards.rejected, (state, action) => {
         state.isFetchCardsLoading = false;
         state.fetchCardsError = action.error.message ?? "Error fetching cards";
+      })
+      .addCase(createDeck.fulfilled, (state, action) => {
+        const newDeck = action.payload;
+        return { ...state, decks: [...state.decks, newDeck] };
+      })
+      .addCase(createCard.fulfilled, (state, action) => {
+        const newCard = action.payload;
+        return { ...state, cards: [...state.cards, newCard] };
       });
   },
 });

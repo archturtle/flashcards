@@ -1,14 +1,12 @@
+import AuthProvider from "@/app/AuthProvider";
+import Profile from "@/components/Profile";
 import ScreenContainer from "@/components/ui/ScreenContainer";
 import ReduxProvider from "@/store/Provider";
 import { cn } from "@/utils/classNameMerge";
+import { IconCardsFilled } from "@tabler/icons-react";
 import type { Metadata } from "next";
 import { Alegreya, Work_Sans } from "next/font/google";
 import "./globals.css";
-import AuthProvider from "@/app/AuthProvider";
-import { IconCardsFilled } from "@tabler/icons-react";
-import Login from "@/components/Login";
-import Logout from "@/components/Logout";
-import Profile from "@/components/Profile"
 
 const alegreya = Alegreya({
   variable: "--font-alegreya",
@@ -51,12 +49,14 @@ export default function RootLayout({
           <ReduxProvider>
             <ScreenContainer className="bg-base text-text flex flex-col items-center justify-between p-[2px] overflow-y-auto scrollbar-hide max-w-full">
               <div className="flex px-5 flex-col items-center max-w-[600px] lg:max-w-[800px] w-full flex-1 max-w-full">
-                <div className="flex items-center gap-2 w-full px-2">
-                  <IconCardsFilled />
-                  <h3 className="font-bold text-[24px] text-center">
-                    Smart Cards
-                  </h3>
-                  <Profile />
+                <div className="flex items-center gap-2 w-full  justify-between py-[4px]">
+                  <div className="flex items-center gap-2">
+                    <IconCardsFilled />
+                    <h3 className="font-bold text-[24px] text-center">
+                      Smart Cards
+                    </h3>
+                  </div>
+                  <Profile className="px-[20px] py-[4px]" />
                 </div>
                 {children}
               </div>

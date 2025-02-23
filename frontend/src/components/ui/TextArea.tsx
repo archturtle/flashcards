@@ -11,7 +11,7 @@ const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
     return (
       <textarea
         className={cn(
-          "focus:outline bg-subtle-06/15 text-text placeholder:text-subtle-03 focus:-outline-offset-[3px] focus:bg-primary-03 focus:outline-forest-07 focus:text-forest-07 focus:outline-[3px]",
+          "focus:outline bg-base-06/15 text-text placeholder:text-subtle-03 focus:-outline-offset-[3px] focus:bg-primary-03 focus:outline-forest-07 focus:text-forest-07 focus:outline-[3px]",
           {},
           className,
         )}

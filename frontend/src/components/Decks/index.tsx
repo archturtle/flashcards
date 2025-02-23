@@ -22,7 +22,7 @@ const Decks = () => {
     <div className="flex flex-col size-full gap-2">
       <div className="flex justify-between w-full">
         <h1 className="font-bold text-[40px]">My Decks</h1>
-        <Button size="md">
+        <Button size="md" onClick={() => router.push("/decks/create")}>
           <IconPlus className="text-subtle-03" />
           New Deck
         </Button>

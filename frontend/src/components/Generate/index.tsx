@@ -1,19 +1,23 @@
 "use client";
 
-import Button from "@/components/ui/Button";
-import { dummyCards } from "@/store/decks/dummy";
-import { IconArrowLeft, IconPlus } from "@tabler/icons-react";
+import { Card } from "@/store/decks/types";
+import { IconArrowLeft } from "@tabler/icons-react";
+import { isEmpty } from "lodash";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import CardForEdit from "../ui/CardForEdit";
+import Button from "../ui/Button";
+import EditGeneratedCards from "./EditGeneratedCards";
+import GenerateCardForm from "./GenerateCardForm";
 
 const Generate = () => {
   const router = useRouter();
-  const [generatedCards, setGeneratedCards] = useState(dummyCards);
+  const [generatedCards, setGeneratedCards] = useState<Card[]>([]);
+
+  const isGeneratingCards = isEmpty(generatedCards);
 
   return (
-    <div className="flex flex-col gap-2 flex-1 pb-[16px]">
-      <div className="flex items-center gap-[20px]">
+    <div className="flex flex-col gap-2 flex-1 pb-[16px] w-full overflow-hidden">
+      <div className="flex items-center gap-[20px] w-full">
         <Button
           isIcon
           size="sm"
@@ -24,21 +28,16 @@ const Generate = () => {
         </Button>
         <h1 className="font-bold text-[40px]">Generate Cards</h1>
       </div>
-
-      <div className="flex flex-col flex-1 overflow-y-scroll scrollbar-hide gap-1">
-        {generatedCards.map((card) => (
-          <CardForEdit
-            onDelete={() => {}}
-            key={card.id}
-            card={card}
-            onChange={() => {}}
+      {isGeneratingCards ? (
+        <GenerateCardForm />
+      ) : (
+        <>
+          <EditGeneratedCards
+            cards={generatedCards}
+            onCardsChange={setGeneratedCards}
           />
-        ))}
-        <Button className="text-text-base/50 rounded-[12px]">
-          <IconPlus />
-          New card
-        </Button>
-      </div>
+        </>
+      )}
     </div>
   );
 };

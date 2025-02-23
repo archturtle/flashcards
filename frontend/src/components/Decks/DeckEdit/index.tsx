@@ -1,12 +1,18 @@
 "use client";
 
 import Button from "@/components/ui/Button";
-import { selectCardsByDeckId, selectDeckById } from "@/store/decks/module";
+import {
+  createCard,
+  selectCardsByDeckId,
+  selectDeckById,
+} from "@/store/decks/module";
 import { IconArrowLeft, IconPlus } from "@tabler/icons-react";
 import { isNil } from "lodash";
 import { useRouter } from "next/navigation";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import CardForEdit from "../../ui/CardForEdit";
+import { AppDispatch } from "@/store/store";
+import router from "next/router";
 
 interface Props {
   id?: string;
@@ -14,6 +20,7 @@ interface Props {
 
 const DeckEdit = ({ id }: Props) => {
   const router = useRouter();
+  const dispatch = useDispatch<AppDispatch>();
 
   const deck = useSelector(!isNil(id) ? selectDeckById(id) : () => undefined);
 
@@ -21,10 +28,14 @@ const DeckEdit = ({ id }: Props) => {
     !isNil(deck?.id) ? selectCardsByDeckId(deck?.id) : () => [],
   );
 
+  const onCreateCard = () => {
+    dispatch(createCard({ front: "", back: "" }));
+  };
+
   if (isNil(deck)) return "Deck is not defined";
 
   return (
-    <div className="flex flex-col gap-2 flex-1 pb-[16px]">
+    <div className="flex flex-col gap-2 flex-1 pb-[16px] w-full">
       <div className="flex items-center gap-[20px]">
         <Button
           isIcon
@@ -46,7 +57,10 @@ const DeckEdit = ({ id }: Props) => {
             onChange={() => {}}
           />
         ))}
-        <Button className="text-text-base/50 rounded-[12px]">
+        <Button
+          className="text-text-base/50 rounded-[12px]"
+          onClick={() => onCreateCard()}
+        >
           <IconPlus />
           New card
         </Button>

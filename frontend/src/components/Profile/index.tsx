@@ -1,35 +1,19 @@
 "use client";
-import { useAuth0 } from "@auth0/auth0-react";
-import { useEffect, useState } from "react";
-import React from "react";
 import Login from "@/components/Login";
+import { useAuth0 } from "@auth0/auth0-react";
 import Logout from "../Logout";
+import { ButtonProps } from "../ui/Button";
 
-const Profile = () => {
-    const { user, isAuthenticated, isLoading } = useAuth0();
+const Profile = ({ ...props }: ButtonProps) => {
+  const { isAuthenticated, isLoading } = useAuth0();
 
-    if (isLoading) {
-      return <div>Loading ...</div>;
-    }
+  if (isLoading) {
+    return <div>Loading ...</div>;
+  }
 
-    if (!isAuthenticated) {
-    return (
-        <div className="flex gap-2 px-2">
-          <p>Not logged in.</p>
-          <Login />
-        </div>
-    );
-    }
+  const ButtonComponent = isAuthenticated ? Logout : Login;
+  return <ButtonComponent {...props} />;
+};
 
-    return (
-      <div className="flex gap-2 px-2">
-          <div className="flex flex-col">
-            <p>{user?.name}</p>
-            <p>{user?.email}</p>
-          </div>
-          <Logout />
-      </div>
-    );
-  };
-  
-  export default Profile;
+export default Profile;
+
