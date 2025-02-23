@@ -13,11 +13,14 @@ public class Card {
     private String front;
     @NotBlank
     private String back;
+    @NotBlank
+    private String deckId;
 
-    public Card (String id, String front, String back) {
+    public Card (String id, String front, String back, String deckId) {
         this.id = id;
         this.front = front;
         this.back = back;
+        this.deckId = deckId;
     }
 
     public String getId() {
@@ -44,10 +47,18 @@ public class Card {
         this.back = back;
     }
 
+    public String getDeckId() {
+        return deckId;
+    }
+
+    public void setDeckId(String deckId) {
+        this.deckId = deckId;
+    }
+
     public String toString() {
        return String.format(
-               "ID: %s\nFront: %s\nBack: %s\n",
-                id, front, back
+               "ID: %s\nFront: %s\nBack: %s\nDeck ID: %s\n",
+                id, front, back, deckId
        );
     }
 }

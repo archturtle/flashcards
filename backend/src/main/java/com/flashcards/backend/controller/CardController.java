@@ -39,13 +39,29 @@ public class CardController {
         this.chatClient = builder.build();
     }
 
-    @GetMapping("/get/{id}")
-    public ResponseEntity<ArrayList<Card>> getCardById(@PathVariable String id) {
-        LOG.log(Level.INFO, "GET /get/{0}", id);
+//    @GetMapping("/get/{id}")
+//    public ResponseEntity<ArrayList<Card>> getCardById(@PathVariable String id) {
+//        LOG.log(Level.INFO, "GET /get/{0}", id);
+//
+//        try {
+//            ArrayList<String> ids = new ArrayList<>(Arrays.asList(id.split(",")));
+//            ArrayList<Card> cards = new ArrayList<>(cardDAO.findAllById(ids));
+//            if (!cards.isEmpty()) {
+//                return new ResponseEntity<>(cards, HttpStatus.OK);
+//            } else {
+//                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//            }
+//        } catch (Exception e) {
+//            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
+//    }
+
+    @GetMapping("/deck/{deckId}")
+    public ResponseEntity<ArrayList<Card>> getCardsByDeckId(@PathVariable String deckId) {
+        LOG.log(Level.INFO, "GET /deck/{0}", deckId);
 
         try {
-            ArrayList<String> ids = new ArrayList<>(Arrays.asList(id.split(",")));
-            ArrayList<Card> cards = new ArrayList<>(cardDAO.findAllById(ids));
+            ArrayList<Card> cards = new ArrayList<>(cardDAO.findCardsByDeckId(deckId));
             if (!cards.isEmpty()) {
                 return new ResponseEntity<>(cards, HttpStatus.OK);
             } else {
