@@ -46,8 +46,8 @@ export default function RootLayout({
       >
         <AuthProvider>
           <ReduxProvider>
-            <ScreenContainer className="bg-base text-text flex flex-col items-center justify-between p-[2px] overflow-y-auto scrollbar-hide">
-              <div className="flex px-5 flex-col item-center max-w-[600px] lg:max-w-[800px] w-full flex-1">
+            <ScreenContainer className="bg-base text-text flex flex-col items-center justify-between p-[2px] overflow-y-auto scrollbar-hide max-w-full">
+              <div className="flex px-5 flex-col items-center max-w-[600px] lg:max-w-[800px] w-full flex-1 max-w-full">
                 <div className="flex items-center gap-2 w-full px-2">
                   <IconCardsFilled />
                   <h3 className="font-bold text-[24px] text-center">

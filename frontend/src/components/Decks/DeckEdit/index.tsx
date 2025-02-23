@@ -6,7 +6,7 @@ import { IconArrowLeft, IconPlus } from "@tabler/icons-react";
 import { isNil } from "lodash";
 import { useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
-import CardForEdit from "./CardForEdit";
+import CardForEdit from "../../ui/CardForEdit";
 
 interface Props {
   id?: string;

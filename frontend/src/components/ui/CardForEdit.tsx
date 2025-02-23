@@ -2,7 +2,7 @@ import Button from "@/components/ui/Button";
 import { Card } from "@/store/decks/types";
 import { IconTrash } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
-import TextArea from "./TextArea";
+import TextArea from "../Decks/DeckEdit/TextArea";
 
 interface Props {
   card: Card;
