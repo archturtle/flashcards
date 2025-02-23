@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,16 +25,14 @@ public class DeckController {
     }
 
     @PostMapping("create")
-    public ResponseEntity<Deck> createDeck(@RequestBody Deck deck) {
+    public ResponseEntity<Deck> createDeck(@Valid @RequestBody Deck deck) {
         LOG.log(Level.INFO, "POST /deck/create {0}", deck);
 
         try {
-            if (deckDAO.findById(deck.getId()).isEmpty()) {
-                Deck new_deck = deckDAO.save(deck);
-                return new ResponseEntity<>(new_deck, HttpStatus.CREATED);
-            } else {
-                return new ResponseEntity<>(HttpStatus.CONFLICT);
-            }
+            deck.setId(null);
+            deck.setCards(new ArrayList<>());
+            Deck new_deck = deckDAO.save(deck);
+            return new ResponseEntity<>(new_deck, HttpStatus.CREATED);
         } catch (Exception e) {
             LOG.log(Level.SEVERE, e.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -58,7 +57,7 @@ public class DeckController {
     }
 
     @PostMapping("update")
-    public ResponseEntity<Deck> updateDeck(@RequestBody Deck deck) {
+    public ResponseEntity<Deck> updateDeck(@Valid @RequestBody Deck deck) {
         LOG.log(Level.INFO, "POST /deck/update {0}", deck);
 
         try {

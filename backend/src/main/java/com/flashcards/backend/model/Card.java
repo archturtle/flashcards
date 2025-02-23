@@ -1,13 +1,17 @@
 package com.flashcards.backend.model;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document("card")
 public class Card {
-    @Id
+    @Id @NotNull
     private String id;
+    @NotBlank
     private String front;
+    @NotBlank
     private String back;
 
     public Card (String id, String front, String back) {

@@ -29,7 +29,7 @@ const CardForEdit = ({ card: cardProp, onChange, onDelete }: Props) => {
 
   const { front, back } = card;
   return (
-    <div className="outline outline-blue-07/40 -outline-offset-2  flex relative  bg-blue-02 text-[24px] font-bold rounded-[12px] overflow-hidden divide-x divide-blue-07 text-blue-07">
+    <div className="outline outline-blue-07/40 -outline-offset-2  flex relative  bg-blue-02 text-[24px] font-bold rounded-[12px] overflow-hidden divide-x divide-blue-07/40 text-blue-07">
       <TextArea
         className="rounded-l-[14px] flex-1 basis-0 p-3 bg-transparent z-10 resize-none"
         value={front}
@@ -44,10 +44,11 @@ const CardForEdit = ({ card: cardProp, onChange, onDelete }: Props) => {
       <Button
         isIcon
         size="sm"
-        className="rounded-full size-[36px] p-0 right-2 top-2 bg-fire-04 absolute z-20"
+        variant="minimal"
+        className="rounded-full size-[36px] p-0 right-2 top-2 absolute z-20 bg-base"
         onClick={onDelete}
       >
-        <IconTrash className="text-base/70" />
+        <IconTrash className="text-text-base" />
       </Button>
     </div>
   );

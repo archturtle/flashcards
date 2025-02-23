@@ -1,15 +1,22 @@
 "use client";
 
-import { selectDecks } from "@/store/decks/module";
+import { fetchDecks, selectDecks } from "@/store/decks/module";
 import { IconPlus, IconSparkles } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Button from "../ui/Button";
 import DeckCard from "./DeckCard";
+import { AppDispatch } from "@/store/store";
+import { useEffect } from "react";
 
 const Decks = () => {
   const decks = useSelector(selectDecks);
   const router = useRouter();
+  const dispatch = useDispatch<AppDispatch>();
+
+  useEffect(() => {
+    dispatch(fetchDecks());
+  }, []);
 
   return (
     <div className="flex flex-col size-full gap-2">

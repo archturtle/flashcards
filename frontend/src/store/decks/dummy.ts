@@ -1,5 +1,7 @@
 import { Card, Deck } from "./types";
 
+export const email = "fss5045@g.rit.edu";
+
 export const dummyDecks: Deck[] = [
   {
     id: "1",
