@@ -37,8 +37,13 @@ const Generate = () => {
 
   const isGeneratingCards = isEmpty(generatedCards);
 
-  const save = () => {
-    dispatch(createManyCards(generatedCards));
+  const save = (deckId?: string) => {
+    dispatch(
+      createManyCards(
+        generatedCards.map((card) => ({ ...card, deckId: deckId ?? "" })),
+      ),
+    );
+    router.push("/decks");
   };
 
   return (

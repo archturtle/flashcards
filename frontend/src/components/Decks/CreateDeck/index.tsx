@@ -16,7 +16,8 @@ const CreateDeck = () => {
   const dispatch = useDispatch<AppDispatch>();
 
   const onCreateDeck = () => {
-    dispatch(createDeck({ name, id: "" }));
+    dispatch(createDeck({ name, id: "", owner: "" }));
+    router.push("/decks");
   };
 
   return (

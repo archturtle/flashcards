@@ -91,7 +91,7 @@ const EditGeneratedCards = ({ cards, onCardsChange, onSave }: Props) => {
         <Button
           variant="primary"
           className="text-[32px] font-bold"
-          onClick={onSave}
+          onClick={() => onSave(targetDeck?.id)}
         >
           Save Cards
         </Button>
