@@ -190,7 +190,7 @@ public class CardController {
                     Please pay special attention to these instructions: %s
                     """, userPrompt);
 
-                PDDocument document = PDDocument.load(file.getBytes())
+                PDDocument document = PDDocument.load(file.getBytes());
                 PDFRenderer renderer = new PDFRenderer(document);
                 PDPageTree pages = document.getPages();
 
@@ -206,8 +206,7 @@ public class CardController {
                     ));
                 }
         }
-
-            UserMessage userMessage = new UserMessage(file_prompt, medias);
+            UserMessage userMessage = new UserMessage(generationPrompt, medias);
             Prompt prompt = new Prompt(userMessage);
             String response = chatClient.prompt(prompt).call().content();
             if (response == null || response.isEmpty()) {
