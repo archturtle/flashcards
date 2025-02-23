@@ -8,7 +8,7 @@ const Login = () => {
 
   return (
     <div className="size-full flex-1">
-      <Button size="lg" className="w-full" onClick={() => loginWithRedirect()}>
+      <Button size="md" className="w-full" onClick={() => loginWithRedirect()}>
         Login
       </Button>
     </div>

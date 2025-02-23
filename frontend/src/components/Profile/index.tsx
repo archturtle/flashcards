@@ -3,6 +3,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { useEffect, useState } from "react";
 import React from "react";
 import Login from "@/components/Login";
+import Logout from "../Logout";
 
 const Profile = () => {
     const { user, isAuthenticated, isLoading } = useAuth0();
@@ -13,18 +14,20 @@ const Profile = () => {
 
     if (!isAuthenticated) {
     return (
-        <div>
-        <p>Not authenticated</p>
-        <Login />
+        <div className="flex gap-2 px-2">
+          <p>Not logged in.</p>
+          <Login />
         </div>
     );
     }
 
     return (
-      <div>
-          <img src={user?.picture} alt={user?.name} />
-          <h2>{user?.name}</h2>
-          <p>{user?.email}</p>
+      <div className="flex gap-2 px-2">
+          <div className="flex flex-col">
+            <p>{user?.name}</p>
+            <p>{user?.email}</p>
+          </div>
+          <Logout />
       </div>
     );
   };

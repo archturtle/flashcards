@@ -6,6 +6,9 @@ import { Alegreya, Work_Sans } from "next/font/google";
 import "./globals.css";
 import AuthProvider from "@/app/AuthProvider";
 import { IconCardsFilled } from "@tabler/icons-react";
+import Login from "@/components/Login";
+import Logout from "@/components/Logout";
+import Profile from "@/components/Profile"
 
 const alegreya = Alegreya({
   variable: "--font-alegreya",
@@ -53,6 +56,7 @@ export default function RootLayout({
                   <h3 className="font-bold text-[24px] text-center">
                     Smart Cards
                   </h3>
+                  <Profile />
                 </div>
                 {children}
               </div>
