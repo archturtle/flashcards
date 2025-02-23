@@ -1,0 +1,35 @@
+### GET ALL DECKS
+GET http://localhost:8080/deck/fetch/fss5045@g.rit.edu
+###
+
+### POST FIRST DECK
+POST http://localhost:8080/deck/create
+Content-Type: application/json
+
+{
+  "id": "",
+  "name": "Finn's First Deck",
+  "owner": "fss5045@g.rit.edu",
+  "cards": []
+}
+
+> {%
+    client.global.set("orig", response.body);
+%}
+###
+
+### GET ALL DECKS
+GET http://localhost:8080/deck/fetch/fss5045@g.rit.edu
+###
+
+### UPDATE FIRST DECK
+POST http://localhost:8080/deck/update
+Content-Type: application/json
+
+{
+  "id": "67ba572023f19d653c312480",
+  "name": "This is a very cool deck.",
+  "owner": "fss5045@g.rit.edu",
+  "cards": []
+}
+###

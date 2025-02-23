@@ -1,0 +1,5 @@
+### GET request to example server
+GET http://localhost:8080/card/get/67ba5208b87c563ea10c4f83
+
+
+###

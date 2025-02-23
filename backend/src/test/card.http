@@ -1,7 +1,0 @@
-### GET request to example server
-POST http://localhost:8080/card/67ba5208b87c563ea10c4f83
-Content-Type: application/json
-
-
-
-###
