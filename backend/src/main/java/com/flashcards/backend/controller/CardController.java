@@ -85,7 +85,7 @@ public class CardController {
         try {
             String userId = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             for (Card card: cards) {
-                if (!cardDAO.cardBelongsToDeckOwnedBy(card.getId(), userId)) {
+                if (!deckDAO.deckIsOwnedBy(card.getDeckId(), userId)) {
                     return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
                 }
 
