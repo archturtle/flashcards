@@ -137,52 +137,75 @@ public class CardController {
     @PostMapping(path="/generate", produces=MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> generate(@RequestPart("file") MultipartFile file, @RequestPart("prompt") String userPrompt) {
         LOG.log(Level.INFO, "POST /generate", file);
+        ArrayList<Media> medias = new ArrayList<>();
+        String generationPrompt;
+        try {
         if (file.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            generationPrompt = String.format(
+                    """
+                    Given the topic: %s generate flash cards in this format:
+                    [
+                      {
+                        "front": "front text",
+                        "back": "back"
+                      },
+                      {
+                        "front": "front text",
+                        "back": "back"
+                      },
+                      {
+                        "front": "front text",
+                        "back": "back"
+                      },
+                      ...
+                    ]
+                    
+                    Make sure to only include the JSON and not anything else.
+                
+                    """, userPrompt);
+        } else {
+             generationPrompt = String.format(
+                    """
+                    Given my lecture notes attached, generate some flash cards in this format:
+                    [
+                      {
+                        "front": "front text",
+                        "back": "back"
+                      },
+                      {
+                        "front": "front text",
+                        "back": "back"
+                      },
+                      {
+                        "front": "front text",
+                        "back": "back"
+                      },
+                      ...
+                    ]
+                    
+                    Make sure to only include the JSON and not anything else.
+                
+                    If information is repeated, give general topic info instead.
+                    
+                    Please pay special attention to these instructions: %s
+                    """, userPrompt);
+
+                PDDocument document = PDDocument.load(file.getBytes())
+                PDFRenderer renderer = new PDFRenderer(document);
+                PDPageTree pages = document.getPages();
+
+
+                for (PDPage page : pages) {
+                    int pageIndex = document.getPages().indexOf(page);
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    ImageIO.write(renderer.renderImageWithDPI(pageIndex, 300), "PNG", baos);
+
+                    medias.add(new Media(
+                            MimeType.valueOf("image/png"),
+                            new ByteArrayResource(baos.toByteArray())
+                    ));
+                }
         }
-
-        String file_prompt = String.format(
-            """
-            Given my lecture notes attached, generate some flash cards in this format:
-            [
-              {
-                "front": "front text",
-                "back": "back"
-              },
-              {
-                "front": "front text",
-                "back": "back"
-              },
-              {
-                "front": "front text",
-                "back": "back"
-              },
-              ...
-            ]
-            
-            Make sure to only include the JSON and not anything else.
-        
-            If information is repeated, give general topic info instead.
-            
-            Please pay special attention to these instructions: %s
-            """, userPrompt);
-
-
-        try (PDDocument document = PDDocument.load(file.getBytes())) {
-            PDFRenderer renderer = new PDFRenderer(document);
-            PDPageTree pages = document.getPages();
-            ArrayList<Media> medias = new ArrayList<>();
-
-            for (PDPage page : pages) {
-                int pageIndex = document.getPages().indexOf(page);
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                ImageIO.write(renderer.renderImageWithDPI(pageIndex, 300), "PNG", baos);
-
-                medias.add(new Media(
-                        MimeType.valueOf("image/png"),
-                        new ByteArrayResource(baos.toByteArray())
-                ));
-            }
 
             UserMessage userMessage = new UserMessage(file_prompt, medias);
             Prompt prompt = new Prompt(userMessage);
