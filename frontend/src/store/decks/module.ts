@@ -83,6 +83,50 @@ export const createCard = createAsyncThunk(
   },
 );
 
+export const createManyCards = createAsyncThunk(
+  "cards/create-many",
+  async (cards: Partial<Card>[]) => {
+    try {
+      const response = await axios.post(
+        `${config.api.development}/card/create-many`,
+        cards,
+      );
+      return response.data;
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  },
+);
+
+export const deleteCard = createAsyncThunk(
+  "cards/delete",
+  async (id: string) => {
+    try {
+      const response = await axios.post(
+        `${config.api.development}/card/delete/${id}`
+      );
+      return response.data;
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  },
+);
+
+export const updateCard = createAsyncThunk(
+  "cards/update",
+  async (card: Partial<Card>) => {
+    try {
+      const response = await axios.post(
+        `${config.api.development}/card/update`,
+        card,
+      );
+      return response.data;
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  },
+);
+
 const decksSlice = createSlice({
   name: "decks",
   initialState,
