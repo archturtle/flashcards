@@ -10,7 +10,7 @@ const Logout = ({ className, ...props }: ButtonProps) => {
   return (
     <Button
       size="md"
-      className={cn("w-full", className)}
+      className={className}
       onClick={() =>
         logout({
           logoutParams: { returnTo: window.location.origin + "/decks" },
