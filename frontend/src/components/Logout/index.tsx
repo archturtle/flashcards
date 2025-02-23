@@ -8,16 +8,7 @@ const Logout = ({ className, ...props }: ButtonProps) => {
   const { logout } = useAuth0();
 
   return (
-    <Button
-      size="md"
-      className={className}
-      onClick={() =>
-        logout({
-          logoutParams: { returnTo: window.location.origin + "/decks" },
-        })
-      }
-      {...props}
-    >
+    <Button size="md" className={className} onClick={() => logout()} {...props}>
       Log Out
     </Button>
   );

@@ -33,7 +33,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
             "text-3xl font-semibold px-[44px] py-[28px] rounded-[8px] gap-3":
               size === "xl",
 
-            "outline outline-base-06/50 bg-base-06/15 text-text-base placeholder:text-base-03 focus:-outline-offset-[3px] focus:bg-primary-03 focus:outline-forest-07 focus:outline-[3px]":
+            "outline outline-base-06/50 bg-base-06/15 text-text-base placeholder:text-base-03 focus:-outline-offset-[3px] focus:bg-base-06/30 focus:outline-primary-06 focus:outline-[3px]":
               variant === "default",
 
             "opacity-70 cursor-not-allowed": isDisabled,

@@ -30,7 +30,7 @@ const GenerateCardForm = ({
   return (
     <>
       <TextArea
-        className="rounded-[12px] outline outline-base-06/30 resize-none -outline-offset-2 px-[28px] py-[24px] placeholder-base-06 text-[24px] focus:placeholder-forest-07/70 flex-1"
+        className="rounded-[12px] outline outline-base-06/30 resize-none -outline-offset-2 px-[28px] py-[24px] placeholder-base-06 text-[24px] font-medium flex-1"
         placeholder="Describe the cards you want to generate..."
         onChange={(e) => setPrompt(e.target.value)}
       />
