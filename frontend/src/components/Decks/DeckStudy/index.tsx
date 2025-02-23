@@ -1,5 +1,6 @@
 import Button from "@/components/ui/Button";
 import {
+  fetchCards,
   fetchDeck,
   selectCardsByDeckId,
   selectDeckById,
@@ -29,8 +30,12 @@ const DeckStudy = ({ id }: Props) => {
   );
 
   useEffect(() => {
-    dispatch(id ? () => fetchDeck(id) : () => {});
-  }, [dispatch]);
+    if (id) {
+      console.log("attempting fetch");
+      dispatch(fetchDeck(id));
+      dispatch(fetchCards(id));
+    }
+  }, []);
 
   useEffect(() => {
     setCurrentCardIndex(0);

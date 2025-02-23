@@ -4,6 +4,7 @@ import Button from "@/components/ui/Button";
 import {
   createCard,
   deleteCard,
+  fetchCards,
   fetchDeck,
   selectCardsByDeckId,
   selectDeckById,
@@ -33,7 +34,10 @@ const DeckEdit = ({ id }: Props) => {
   );
 
   useEffect(() => {
-    dispatch(id ? () => fetchDeck(id) : () => {});
+    if (id) {
+      dispatch(fetchDeck(id));
+      dispatch(fetchCards(id));
+    }
   }, []);
 
   const onCreateCard = () => {

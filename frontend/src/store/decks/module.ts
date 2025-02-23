@@ -92,10 +92,10 @@ export const updateDeck = createAsyncThunk(
 
 export const fetchCards = createAsyncThunk(
   "cards/fetch",
-  async (id: string) => {
+  async (deckId: string) => {
     try {
       const response = await axinst.get(
-        `${config.api.development}/card/deck/${id}`,
+        `${config.api.development}/card/deck/${deckId}`,
       );
       return response.data;
     } catch (error) {
