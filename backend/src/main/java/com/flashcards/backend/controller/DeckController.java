@@ -1,6 +1,5 @@
 package com.flashcards.backend.controller;
 
-import com.auth0.jwt.JWT;
 import com.flashcards.backend.model.Deck;
 import com.flashcards.backend.persistence.CardDAO;
 import com.flashcards.backend.persistence.DeckDAO;
@@ -27,7 +26,7 @@ public class DeckController {
     }
 
     @PostMapping("create")
-    public ResponseEntity<Deck> createDeck(@Valid @RequestBody Deck deck, @RequestHeader("Authorization") String token) {
+    public ResponseEntity<Deck> createDeck(@Valid @RequestBody Deck deck) {
         LOG.log(Level.INFO, "POST /deck/create");
 
         try {
@@ -44,7 +43,7 @@ public class DeckController {
     }
 
     @DeleteMapping("delete/{deckId}")
-    public ResponseEntity<String> deleteDeck(@PathVariable String deckId, @RequestHeader("Authorization") String token) {
+    public ResponseEntity<String> deleteDeck(@PathVariable String deckId) {
         LOG.log(Level.INFO, "POST /deck/delete/{id}");
 
         try {
@@ -67,7 +66,7 @@ public class DeckController {
     }
 
     @PostMapping("update")
-    public ResponseEntity<Deck> updateDeck(@Valid @RequestBody Deck deck, @RequestHeader("Authorization") String token) {
+    public ResponseEntity<Deck> updateDeck(@Valid @RequestBody Deck deck) {
         LOG.log(Level.INFO, "POST /deck/update");
 
         try {
@@ -89,7 +88,7 @@ public class DeckController {
     }
 
     @GetMapping("fetch")
-    public ResponseEntity<ArrayList<Deck>> fetchDecks(@RequestHeader("Authorization") String token) {
+    public ResponseEntity<ArrayList<Deck>> fetchDecks() {
         LOG.log(Level.INFO, "POST /deck/fetch");
 
         try {
@@ -103,7 +102,7 @@ public class DeckController {
     }
 
     @GetMapping("fetch/{id}")
-    public ResponseEntity<Deck> fetchDeck(@PathVariable String id, @RequestHeader("Authorization") String token) {
+    public ResponseEntity<Deck> fetchDeck(@PathVariable String id) {
         LOG.log(Level.INFO, "POST /deck/fetch/{id}");
 
         try {

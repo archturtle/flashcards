@@ -42,7 +42,7 @@ public class CardController {
     }
 
     @GetMapping("/deck/{deckId}")
-    public ResponseEntity<ArrayList<Card>> getCardsByDeckId(@PathVariable String deckId, @RequestHeader("Authorization") String token) {
+    public ResponseEntity<ArrayList<Card>> getCardsByDeckId(@PathVariable String deckId) {
         LOG.log(Level.INFO, "GET /card/deck/{id}");
 
         try {
@@ -60,7 +60,7 @@ public class CardController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Card> createCard(@Valid @RequestBody Card card, @RequestHeader("Authorization") String token) {
+    public ResponseEntity<Card> createCard(@Valid @RequestBody Card card) {
         LOG.log(Level.INFO, "POST /card/create");
 
         try {
@@ -79,7 +79,7 @@ public class CardController {
     }
 
     @PostMapping("/create-many")
-    public ResponseEntity<ArrayList<Card>> createCards(@Valid @RequestBody ArrayList<Card> cards, @RequestHeader("Authorization") String token) {
+    public ResponseEntity<ArrayList<Card>> createCards(@Valid @RequestBody ArrayList<Card> cards) {
         LOG.log(Level.INFO, "POST /card/create-many");
 
         try {
@@ -101,7 +101,7 @@ public class CardController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Card> deleteCard(@PathVariable String id, @RequestHeader("Authorization") String token) {
+    public ResponseEntity<Card> deleteCard(@PathVariable String id) {
         LOG.log(Level.INFO, "POST /card/delete/{id}");
 
         try {
@@ -124,7 +124,7 @@ public class CardController {
     }
 
     @PostMapping("/update")
-    public ResponseEntity<Card> updateCard(@Valid @RequestBody Card card, @RequestHeader("Authorization") String token) {
+    public ResponseEntity<Card> updateCard(@Valid @RequestBody Card card) {
         LOG.log(Level.INFO, "POST /card/update");
 
         try {
