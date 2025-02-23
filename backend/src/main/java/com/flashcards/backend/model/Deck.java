@@ -12,7 +12,7 @@ public class Deck {
     private String id;
     @NotBlank
     private String name;
-    @NotBlank
+    @NotNull
     private String owner;
 
     public Deck(String id, String name, String owner) {
