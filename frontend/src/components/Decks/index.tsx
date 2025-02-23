@@ -1,6 +1,6 @@
 "use client";
 
-import { fetchDecks, selectDecks } from "@/store/decks/module";
+import { deleteDeck, fetchDecks, selectDecks } from "@/store/decks/module";
 import { IconPlus, IconSparkles } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,6 +17,10 @@ const Decks = () => {
   useEffect(() => {
     dispatch(fetchDecks());
   }, []);
+
+  const onDelete = (id: string) => {
+    dispatch(deleteDeck(id));
+  };
 
   return (
     <div className="flex flex-col size-full gap-2">
@@ -50,6 +54,7 @@ const Decks = () => {
             key={deck.id}
             deck={deck}
             onClick={() => router.push(`/decks/${deck.id}`)}
+            onDeleteClick={() => onDelete(deck.id)}
             onEditClick={() => router.push(`/decks/${deck.id}/edit`)}
           />
         ))}

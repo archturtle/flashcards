@@ -31,11 +31,10 @@ const DeckStudy = ({ id }: Props) => {
 
   useEffect(() => {
     if (id) {
-      console.log("attempting fetch");
       dispatch(fetchDeck(id));
       dispatch(fetchCards(id));
     }
-  }, []);
+  }, [id]);
 
   useEffect(() => {
     setCurrentCardIndex(0);

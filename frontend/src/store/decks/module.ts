@@ -227,6 +227,13 @@ const decksSlice = createSlice({
           ...state,
           cards: [...state.cards, ...createdCards],
         };
+      })
+      .addCase(deleteDeck.fulfilled, (state, action) => {
+        const deletedDeck = action.payload;
+        return {
+          ...state,
+          decks: state.decks.filter((deck) => deck.id !== deletedDeck),
+        };
       });
   },
 });
