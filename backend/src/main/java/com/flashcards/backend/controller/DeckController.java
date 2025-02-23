@@ -41,7 +41,7 @@ public class DeckController {
         }
     }
 
-    @PostMapping("delete/{deckId}")
+    @DeleteMapping("delete/{deckId}")
     public ResponseEntity<String> deleteDeck(@PathVariable String deckId) {
         LOG.log(Level.INFO, "POST /deck/delete/{0}", deckId);
 
