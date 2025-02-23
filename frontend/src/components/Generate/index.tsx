@@ -10,6 +10,10 @@ import EditGeneratedCards from "./EditGeneratedCards";
 import GenerateCardForm from "./GenerateCardForm";
 import { useGenerateCards } from "@/store/react-query/generateCards/module";
 import { GenerateCardPayload } from "@/store/react-query/generateCards/types";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/store/store";
+import { createManyCards } from "@/store/decks/module";
+import { nanoid } from "@reduxjs/toolkit";
 
 const Generate = () => {
   const router = useRouter();
@@ -19,14 +23,23 @@ const Generate = () => {
     file: null,
   });
   const { mutateAsync, data } = useGenerateCards(generatePayload);
+  const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
     setGeneratedCards(
-      data?.map((data: Partial<Card>) => ({ ...data, deckId: "" })) ?? [],
+      data?.map((data: Partial<Card>) => ({
+        ...data,
+        deckId: "",
+        id: nanoid(),
+      })) ?? [],
     );
   }, [data]);
 
   const isGeneratingCards = isEmpty(generatedCards);
+
+  const save = () => {
+    dispatch(createManyCards(generatedCards));
+  };
 
   return (
     <div className="flex flex-col gap-2 flex-1 pb-[16px] w-full overflow-hidden">
@@ -52,6 +65,7 @@ const Generate = () => {
           <EditGeneratedCards
             cards={generatedCards}
             onCardsChange={setGeneratedCards}
+            onSave={save}
           />
         </>
       )}
