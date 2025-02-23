@@ -3,8 +3,10 @@
 import Button from "@/components/ui/Button";
 import {
   createCard,
+  deleteCard,
   selectCardsByDeckId,
   selectDeckById,
+  updateCard,
 } from "@/store/decks/module";
 import { AppDispatch } from "@/store/store";
 import { IconArrowLeft, IconPlus } from "@tabler/icons-react";
@@ -12,6 +14,7 @@ import { isNil } from "lodash";
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import CardForEdit from "../../ui/CardForEdit";
+import { Card } from "@/store/decks/types";
 
 interface Props {
   id?: string;
@@ -39,6 +42,14 @@ const DeckEdit = ({ id }: Props) => {
       );
   };
 
+  const onDeleteCard = (id: string) => {
+    dispatch(deleteCard(id));
+  };
+
+  const onUpdateCard = (card: Card) => {
+    dispatch(updateCard(card));
+  };
+
   if (isNil(deck)) return "Deck is not defined";
 
   return (
@@ -58,10 +69,10 @@ const DeckEdit = ({ id }: Props) => {
       <div className="flex flex-col flex-1 overflow-y-scroll scrollbar-hide gap-1">
         {cards.map((card) => (
           <CardForEdit
-            onDelete={() => {}}
+            onDelete={() => onDeleteCard(card.id)}
             key={card.id}
             card={card}
-            onChange={() => {}}
+            onChange={onUpdateCard}
           />
         ))}
         <Button

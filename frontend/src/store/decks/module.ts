@@ -100,7 +100,7 @@ export const deleteCard = createAsyncThunk(
   "cards/delete",
   async (id: string) => {
     try {
-      const response = await axinst.post(
+      const response = await axinst.delete(
         `${config.api.development}/card/delete/${id}`,
       );
       return response.data;
@@ -162,6 +162,22 @@ const decksSlice = createSlice({
       .addCase(createCard.fulfilled, (state, action) => {
         const newCard = action.payload;
         return { ...state, cards: [...state.cards, newCard] };
+      })
+      .addCase(deleteCard.fulfilled, (state, action) => {
+        const deletedCardId = action.payload;
+        return {
+          ...state,
+          cards: state.cards.filter((card) => card.id !== deletedCardId),
+        };
+      })
+      .addCase(updateCard.fulfilled, (state, action) => {
+        const updatedCard = action.payload;
+        return {
+          ...state,
+          cards: state.cards.map((card) =>
+            card.id === updatedCard.id ? updatedCard : card,
+          ),
+        };
       });
   },
 });
