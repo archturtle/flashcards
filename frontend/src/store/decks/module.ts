@@ -206,11 +206,10 @@ const decksSlice = createSlice({
         return { ...state, cards: [...state.cards, newCard] };
       })
       .addCase(deleteCard.fulfilled, (state, action) => {
-        const deletedCardId = action.payload;
-        console.log("the deletedcardid is", deletedCardId);
+        const deletedCard = action.payload;
         return {
           ...state,
-          cards: state.cards.filter((card) => card.id !== deletedCardId),
+          cards: state.cards.filter((card) => card.id !== deletedCard.id),
         };
       })
       .addCase(updateCard.fulfilled, (state, action) => {
