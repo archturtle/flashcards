@@ -22,16 +22,16 @@ const AuthProvider = ({ children }: Props) => {
     <Auth0Provider
       domain="flashcards-bh11.us.auth0.com"
       clientId="nNCxQ3oJI9VhMzukmhHLij2rhiB46IIx"
-      authorizationParams={{ 
-				redirect_uri: window.location.origin + "/decks",
-				audience: "https://flashcards-bh11.us.auth0.com/api/v2/",
-				// scope: "openid profile email"
-			}}
+      authorizationParams={{
+        redirect_uri: window.location.origin + "/decks",
+        audience: "https://flashcards-bh11.us.auth0.com/api/v2/",
+        // scope: "openid profile email"
+      }}
     >
       <AuthProviderSetup />
       {children}
     </Auth0Provider>
   );
-}
+};
 
 export default AuthProvider;
