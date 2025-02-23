@@ -10,7 +10,7 @@ import CardForEdit from "../ui/CardForEdit";
 interface Props {
   cards: Card[];
   onCardsChange: (cards: Card[]) => void;
-  onSave: () => void;
+  onSave: (targetDeckId: string | undefined) => void;
 }
 
 const EditGeneratedCards = ({ cards, onCardsChange, onSave }: Props) => {
