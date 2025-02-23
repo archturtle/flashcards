@@ -11,7 +11,7 @@ export const setAuthTokenInterceptor = (getAccessTokenSilently: () => Promise<st
             try {
                 const token = await getAccessTokenSilently()
                 if (token) {
-                    console.log(token)
+                    // console.log(token)
                     config.headers.Authorization = `Bearer ${token}`;
                 }
             } catch (error) {
