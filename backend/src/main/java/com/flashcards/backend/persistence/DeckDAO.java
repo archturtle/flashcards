@@ -5,6 +5,6 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.ArrayList;
 
-public interface DeckDAO extends MongoRepository<Deck, String> {
+public interface DeckDAO extends MongoRepository<Deck, String>, DeckDAOCustom {
     ArrayList<Deck> findDecksByOwner(String owner);
 }

@@ -2,6 +2,8 @@ package com.flashcards.backend.controller;
 
 import com.flashcards.backend.model.Card;
 import com.flashcards.backend.persistence.CardDAO;
+import com.flashcards.backend.persistence.DeckDAO;
+import jakarta.validation.Valid;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageTree;
@@ -14,11 +16,10 @@ import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.MimeType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import jakarta.validation.Valid;
 
 import javax.imageio.ImageIO;
 import java.io.ByteArrayOutputStream;
@@ -30,26 +31,28 @@ import java.util.logging.Logger;
 @RequestMapping("card")
 public class CardController {
     private static final Logger LOG = Logger.getLogger(CardController.class.getName());
-    private CardDAO cardDAO;
-    private ChatClient chatClient;
+    private final DeckDAO deckDAO;
+    private final CardDAO cardDAO;
+    private final ChatClient chatClient;
 
-    public CardController(CardDAO cardDAO, ChatClient.Builder builder) {
+    public CardController(CardDAO cardDAO, ChatClient.Builder builder, DeckDAO deckDAO) {
         this.cardDAO = cardDAO;
         this.chatClient = builder.build();
+        this.deckDAO = deckDAO;
     }
 
     @GetMapping("/deck/{deckId}")
     public ResponseEntity<ArrayList<Card>> getCardsByDeckId(@PathVariable String deckId, @RequestHeader("Authorization") String token) {
-        LOG.log(Level.INFO, "GET /deck/{0}", deckId);
-        if (token == null) { return new ResponseEntity<>(HttpStatus.UNAUTHORIZED); }
+        LOG.log(Level.INFO, "GET /card/deck/{id}");
 
         try {
-            ArrayList<Card> cards = new ArrayList<>(cardDAO.findCardsByDeckId(deckId));
-            if (!cards.isEmpty()) {
-                return new ResponseEntity<>(cards, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            String userId = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            if (!deckDAO.deckIsOwnedBy(deckId, userId)) {
+                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
             }
+
+            ArrayList<Card> cards = new ArrayList<>(cardDAO.findCardsByDeckId(deckId));
+            return new ResponseEntity<>(cards, HttpStatus.OK);
         } catch (Exception e) {
             LOG.log(Level.SEVERE, e.getLocalizedMessage());
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -58,13 +61,17 @@ public class CardController {
 
     @PostMapping("/create")
     public ResponseEntity<Card> createCard(@Valid @RequestBody Card card, @RequestHeader("Authorization") String token) {
-        LOG.log(Level.INFO, "POST /create {0}", card);
-        if (token == null) { return new ResponseEntity<>(HttpStatus.UNAUTHORIZED); }
+        LOG.log(Level.INFO, "POST /card/create");
 
         try {
+            String userId = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            if (!deckDAO.deckIsOwnedBy(card.getDeckId(), userId)) {
+                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            }
+
             card.setId(null);
-            Card new_deck = cardDAO.save(card);
-            return new ResponseEntity<>(new_deck, HttpStatus.CREATED);
+            Card new_card = cardDAO.save(card);
+            return new ResponseEntity<>(new_card, HttpStatus.CREATED);
         } catch (Exception e) {
             LOG.log(Level.SEVERE, e.getLocalizedMessage());
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -73,11 +80,15 @@ public class CardController {
 
     @PostMapping("/create-many")
     public ResponseEntity<ArrayList<Card>> createCards(@Valid @RequestBody ArrayList<Card> cards, @RequestHeader("Authorization") String token) {
-        LOG.log(Level.INFO, "POST /create-many {0}", cards);
-        if (token == null) { return new ResponseEntity<>(HttpStatus.UNAUTHORIZED); }
+        LOG.log(Level.INFO, "POST /card/create-many");
 
         try {
+            String userId = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             for (Card card: cards) {
+                if (!cardDAO.cardBelongsToDeckOwnedBy(card.getId(), userId)) {
+                    return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+                }
+
                 card.setId(null);
             }
 
@@ -91,11 +102,15 @@ public class CardController {
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Card> deleteCard(@PathVariable String id, @RequestHeader("Authorization") String token) {
-        LOG.log(Level.INFO, "POST /delete/{0}", id);
-        if (token == null) { return new ResponseEntity<>(HttpStatus.UNAUTHORIZED); }
+        LOG.log(Level.INFO, "POST /card/delete/{id}");
 
         try {
+            String userId = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             if (cardDAO.findById(id).isPresent()) {
+                if (!cardDAO.cardBelongsToDeckOwnedBy(id, userId)) {
+                    return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+                }
+
                 Card card = cardDAO.findById(id).get();
                 cardDAO.deleteById(id);
                 return new ResponseEntity<>(card, HttpStatus.OK);
@@ -110,11 +125,15 @@ public class CardController {
 
     @PostMapping("/update")
     public ResponseEntity<Card> updateCard(@Valid @RequestBody Card card, @RequestHeader("Authorization") String token) {
-        LOG.log(Level.INFO, "POST /update/{0}", card);
-        if (token == null) { return new ResponseEntity<>(HttpStatus.UNAUTHORIZED); }
+        LOG.log(Level.INFO, "POST /card/update");
 
         try {
+            String userId = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             if (cardDAO.findById(card.getId()).isPresent()) {
+                if (!cardDAO.cardBelongsToDeckOwnedBy(card.getId(), userId)) {
+                    return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+                }
+
                 Card updated_card = cardDAO.save(card);
                 return new ResponseEntity<>(updated_card, HttpStatus.CREATED);
 
@@ -129,9 +148,10 @@ public class CardController {
 
     @PostMapping(path="/generate", produces=MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> generate(@RequestPart(name="file", required=false) MultipartFile file, @RequestPart("prompt") String userPrompt) {
-        LOG.log(Level.INFO, "POST /generate", file);
+        LOG.log(Level.INFO, "POST /card/generate");
         ArrayList<Media> medias = new ArrayList<>();
         String generationPrompt;
+
         try {
             if (file == null) {
                 generationPrompt = String.format(
@@ -199,6 +219,8 @@ public class CardController {
                             new ByteArrayResource(baos.toByteArray())
                     ));
                 }
+
+                document.close();
             }
 
             UserMessage userMessage = new UserMessage(generationPrompt, medias);
