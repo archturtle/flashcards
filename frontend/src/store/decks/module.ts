@@ -25,10 +25,24 @@ const initialState: DecksState = {
   fetchCardsError: null,
 };
 
-export const fetchDecks = createAsyncThunk("decks/fetch", async () => {
+export const fetchDeck = createAsyncThunk(
+  "decks/fetch", async (id: string) => {
   try {
     const response = await axinst.get(
-      `${config.api.development}/deck/fetch/${email}`,
+      `${config.api.development}/deck/fetch/${id}`,
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    return [];
+  }
+});
+
+export const fetchDecks = createAsyncThunk(
+  "decks/fetch-many", async () => {
+  try {
+    const response = await axinst.get(
+      `${config.api.development}/deck/fetch}`,
     );
     return response.data;
   } catch (error) {
@@ -48,6 +62,35 @@ export const createDeck = createAsyncThunk(
       return response.data;
     } catch (error) {
       console.error("Error fetching data:", error);
+    }
+  },
+);
+
+export const deleteDeck = createAsyncThunk(
+  "decks/delete",
+  async (id: string) => {
+    try {
+      const response = await axinst.delete(
+        `${config.api.development}/deck/delete/${id}`,
+      );
+      return response.data;
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  },
+);
+
+export const updateDeck = createAsyncThunk(
+  "decks/update",
+  async (deck: Partial<Deck>) => {
+    try {
+      const response = await axinst.post(
+        `${config.api.development}/deck/update`,
+        deck,
+      );
+      return response.data;
+    } catch (error) {
+      console.error("Error:", error);
     }
   },
 );
