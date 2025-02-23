@@ -1,19 +1,20 @@
 "use client";
 
+import { createManyCards, fetchDecks } from "@/store/decks/module";
 import { Card } from "@/store/decks/types";
+import { useGenerateCards } from "@/store/react-query/generateCards/module";
+import { GenerateCardPayload } from "@/store/react-query/generateCards/types";
+import { AppDispatch } from "@/store/store";
+import { nanoid } from "@reduxjs/toolkit";
 import { IconArrowLeft } from "@tabler/icons-react";
 import { isEmpty } from "lodash";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import Button from "../ui/Button";
 import EditGeneratedCards from "./EditGeneratedCards";
 import GenerateCardForm from "./GenerateCardForm";
-import { useGenerateCards } from "@/store/react-query/generateCards/module";
-import { GenerateCardPayload } from "@/store/react-query/generateCards/types";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "@/store/store";
-import { createManyCards } from "@/store/decks/module";
-import { nanoid } from "@reduxjs/toolkit";
+import Spinner from "../ui/Spinner";
 
 const Generate = () => {
   const router = useRouter();
@@ -22,8 +23,12 @@ const Generate = () => {
     prompt: "",
     file: null,
   });
-  const { mutateAsync, data } = useGenerateCards(generatePayload);
+  const { isPending, mutateAsync, data } = useGenerateCards(generatePayload);
   const dispatch = useDispatch<AppDispatch>();
+
+  useEffect(() => {
+    dispatch(fetchDecks());
+  }, []);
 
   useEffect(() => {
     setGeneratedCards(
@@ -60,11 +65,15 @@ const Generate = () => {
         <h1 className="font-bold text-[40px]">Generate Cards</h1>
       </div>
       {isGeneratingCards ? (
-        <GenerateCardForm
-          onGenerate={mutateAsync}
-          generatePayload={generatePayload}
-          onGeneratePayloadChange={setGeneratePayload}
-        />
+        isPending ? (
+          <Spinner />
+        ) : (
+          <GenerateCardForm
+            onGenerate={mutateAsync}
+            generatePayload={generatePayload}
+            onGeneratePayloadChange={setGeneratePayload}
+          />
+        )
       ) : (
         <>
           <EditGeneratedCards
