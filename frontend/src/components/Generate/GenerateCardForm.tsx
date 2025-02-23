@@ -1,14 +1,29 @@
+import { GenerateCardPayload } from "@/store/react-query/generateCards/types";
 import { isEmpty } from "lodash";
-import { useState } from "react";
 import Button from "../ui/Button";
 import TextArea from "../ui/TextArea";
 import FileUploadButton from "./FileUploadButton";
 
-interface Props {}
+interface Props {
+  onGenerate: () => void;
+  generatePayload: GenerateCardPayload;
+  onGeneratePayloadChange: (p: GenerateCardPayload) => void;
+}
 
-const GenerateCardForm = ({}: Props) => {
-  const [prompt, setPrompt] = useState("");
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+const GenerateCardForm = ({
+  onGenerate,
+  generatePayload,
+  onGeneratePayloadChange,
+}: Props) => {
+  const { prompt, file } = generatePayload;
+
+  const setPrompt = (prompt: string) => {
+    onGeneratePayloadChange({ ...generatePayload, prompt });
+  };
+
+  const setSelectedFile = (file: File | null) => {
+    onGeneratePayloadChange({ ...generatePayload, file });
+  };
 
   const isCTADisabled = isEmpty(prompt);
 
@@ -20,7 +35,7 @@ const GenerateCardForm = ({}: Props) => {
         onChange={(e) => setPrompt(e.target.value)}
       />
       <FileUploadButton
-        file={selectedFile}
+        file={file}
         onFileChange={setSelectedFile}
         className="h-[200px]"
       />
@@ -28,6 +43,7 @@ const GenerateCardForm = ({}: Props) => {
         variant="primary"
         className="text-[32px] font-bold"
         isDisabled={isCTADisabled}
+        onClick={onGenerate}
       >
         Generate Flashcards
       </Button>

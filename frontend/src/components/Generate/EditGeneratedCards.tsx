@@ -1,11 +1,11 @@
+import { selectDecks } from "@/store/decks/module";
 import { Card, Deck } from "@/store/decks/types";
 import { nanoid } from "@reduxjs/toolkit";
 import { IconChevronDown, IconPlus } from "@tabler/icons-react";
-import Button from "../ui/Button";
-import CardForEdit from "../ui/CardForEdit";
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { selectDeckById, selectDecks } from "@/store/decks/module";
+import Button from "../ui/Button";
+import CardForEdit from "../ui/CardForEdit";
 
 interface Props {
   cards: Card[];
@@ -13,8 +13,10 @@ interface Props {
 }
 
 const EditGeneratedCards = ({ cards, onCardsChange }: Props) => {
-  const [targetDeck, setTargetDeck] = useState<Deck | null>(null);
   const decks = useSelector(selectDecks);
+  const [targetDeck, setTargetDeck] = useState<Deck | null>(
+    decks.at(0) ?? null,
+  );
 
   const onCardChange = (newCard: Card) => {
     const newGeneratedCards = cards.map((card) =>
@@ -29,7 +31,12 @@ const EditGeneratedCards = ({ cards, onCardsChange }: Props) => {
   };
 
   const createNewCard = () => {
-    const newCard: Card = { front: "", back: "", id: nanoid() };
+    const newCard: Card = {
+      front: "",
+      back: "",
+      id: nanoid(),
+      deckId: nanoid(),
+    };
     const newCards = [...cards, newCard];
     onCardsChange(newCards);
   };
@@ -40,7 +47,7 @@ const EditGeneratedCards = ({ cards, onCardsChange }: Props) => {
   };
 
   return (
-    <div className="w-full flex-1 flex flex-col justify-between">
+    <div className="w-full flex-1 flex flex-col justify-between gap-2">
       <div className="flex flex-col flex-1 overflow-y-scroll scrollbar-hide gap-1 flex-1">
         {cards.map((card) => (
           <CardForEdit
@@ -58,7 +65,6 @@ const EditGeneratedCards = ({ cards, onCardsChange }: Props) => {
           New card
         </Button>
       </div>
-
       <div className="flex flex-col gap-1">
         <div className="w-full relative">
           <select
@@ -82,7 +88,7 @@ const EditGeneratedCards = ({ cards, onCardsChange }: Props) => {
           />
         </div>
         <Button variant="primary" className="text-[32px] font-bold">
-          Generate Flashcards
+          Save Cards
         </Button>
       </div>
     </div>

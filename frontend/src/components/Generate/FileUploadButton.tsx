@@ -18,7 +18,8 @@ const FileUploadButton = ({ className, file, onFileChange }: Props) => {
   return (
     <div
       className={cn(
-        "w-full relative outline-base-06 -outline-offset-2 outline rounded-[12px] bg-purple-03 h-[140px] flex",
+        "w-full relative outline-base-06 -outline-offset-2 outline rounded-[12px] h-[140px] flex",
+        file ? "bg-blue-02 text-blue-07" : "bg-base-02 text-text-base/50",
         className,
       )}
     >
@@ -30,7 +31,7 @@ const FileUploadButton = ({ className, file, onFileChange }: Props) => {
       />
       <label
         htmlFor={file ? undefined : "file-upload"}
-        className="size-full flex flex-col items-center justify-center gap-2 text-text-base/50 cursor-pointer"
+        className="size-full flex flex-col items-center justify-center gap-2  cursor-pointer"
         onClick={file ? () => onFileChange(null) : () => {}}
       >
         <h1 className="font-bold text-[20px]">

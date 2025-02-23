@@ -42,7 +42,7 @@ const DeckStudy = ({ id }: Props) => {
   };
 
   return (
-    <div className="flex flex-col gap-2 flex-1 pb-[16px]">
+    <div className="flex flex-col gap-2 flex-1 pb-[16px] w-full">
       <div className="flex gap-[20px] items-center">
         <Button
           isIcon
@@ -56,29 +56,30 @@ const DeckStudy = ({ id }: Props) => {
       </div>
       <div
         className={cn(
-          "flex flex-col rounded-[14px] px-[36px] py-[30px] flex-1 justify-between text-[30px]",
-          isFront ? "bg-base-01" : "bg-base-03",
+          "flex flex-col rounded-[14px] px-[36px] py-[30px] flex-1 justify-between text-[30px] -outline-offset-2 outline outline-blue-07/50 text-blue-07",
+          isFront ? "bg-blue-02" : "bg-base-03",
         )}
         onClick={() => setIsFront((p) => !p)}
       >
         <div className="flex justify-between w-full">
-          <label className="font-bold text-text-base/50">
-            {isFront ? "Question" : "Answer"}
-          </label>
-          <label className="font-bold text-text-base/50">
+          <label className="font-bold">{isFront ? "Question" : "Answer"}</label>
+          <label className="font-bold ">
             {currentCardIndex + 1} / {cards.length}
           </label>
         </div>
-        <h1 className="text-[44px] leading-[4*px] font-bold">
+        <h1 className="text-[44px] leading-[4*px] font-bold text-text-base">
           {isFront ? currentCard.front : currentCard.back}
         </h1>
-        <label className="w-full text-center text-text-base/50 text-[24px] font-medium">
+        <label className="w-full text-center  text-[24px] font-medium">
           Click to flip
         </label>
       </div>
       <div className="gap-2 flex rounded-[14px]">
-        <Button className="flex-1" onClick={() => incrementCard(-1)}>
-          <IconArrowLeft stroke={3} />
+        <Button
+          className="flex-1 outline-purple-03"
+          onClick={() => incrementCard(-1)}
+        >
+          <IconArrowLeft stroke={3} className="text-purple-03" />
         </Button>
         <Button
           variant="primary"

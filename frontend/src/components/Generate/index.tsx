@@ -4,14 +4,27 @@ import { Card } from "@/store/decks/types";
 import { IconArrowLeft } from "@tabler/icons-react";
 import { isEmpty } from "lodash";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "../ui/Button";
 import EditGeneratedCards from "./EditGeneratedCards";
 import GenerateCardForm from "./GenerateCardForm";
+import { useGenerateCards } from "@/store/react-query/generateCards/module";
+import { GenerateCardPayload } from "@/store/react-query/generateCards/types";
 
 const Generate = () => {
   const router = useRouter();
   const [generatedCards, setGeneratedCards] = useState<Card[]>([]);
+  const [generatePayload, setGeneratePayload] = useState<GenerateCardPayload>({
+    prompt: "",
+    file: null,
+  });
+  const { mutateAsync, data } = useGenerateCards(generatePayload);
+
+  useEffect(() => {
+    setGeneratedCards(
+      data?.map((data: Partial<Card>) => ({ ...data, deckId: "" })) ?? [],
+    );
+  }, [data]);
 
   const isGeneratingCards = isEmpty(generatedCards);
 
@@ -29,7 +42,11 @@ const Generate = () => {
         <h1 className="font-bold text-[40px]">Generate Cards</h1>
       </div>
       {isGeneratingCards ? (
-        <GenerateCardForm />
+        <GenerateCardForm
+          onGenerate={mutateAsync}
+          generatePayload={generatePayload}
+          onGeneratePayloadChange={setGeneratePayload}
+        />
       ) : (
         <>
           <EditGeneratedCards

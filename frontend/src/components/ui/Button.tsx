@@ -34,7 +34,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 
             "outline outline-base-05/50 bg-base text-text hover:bg-base-01 active:bg-subtle-01":
               variant === "default",
-            "bg-primary-03 text-text hover:bg-primary-04 active:bg-primary-05":
+            "bg-primary-03 outline outline-primary-06/50 text-primary-06 hover:bg-primary-04 active:bg-primary-05":
               variant === "primary",
             "outline-none bg-transparent hover:bg-base-06/15 active:bg-base-06/30":
               variant === "minimal",

@@ -8,6 +8,7 @@ const colors = {
   "base-06": "#A19184",
 
   "primary-03": "#DCE059",
+  "primary-06": "#3D6C11",
   "purple-03": "#D199F0",
   "mint-02": "#B7FCBF",
   "forest-07": "#004638",

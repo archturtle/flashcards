@@ -22,20 +22,28 @@ const Decks = () => {
     <div className="flex flex-col size-full gap-2">
       <div className="flex justify-between w-full">
         <h1 className="font-bold text-[40px]">My Decks</h1>
-        <Button size="md" onClick={() => router.push("/decks/create")}>
-          <IconPlus className="text-subtle-03" />
+      </div>
+
+      <div className="flex gap-2">
+        <Button
+          size="lg"
+          className="text-[24px] flex-1 outline-purple-03 font-bold"
+          onClick={() => router.push("/decks/create")}
+        >
+          <IconPlus size={30} stroke={3} className="text-purple-03" />
           New Deck
         </Button>
+
+        <Button
+          variant="primary"
+          size="lg"
+          className="font-bold flex-1 text-[24px]"
+          onClick={() => router.push("/generate")}
+        >
+          <IconSparkles size={36} className="text-subtle-03" />
+          Generate
+        </Button>
       </div>
-      <Button
-        variant="primary"
-        size="lg"
-        className="font-bold"
-        onClick={() => router.push("/generate")}
-      >
-        <IconSparkles size={36} className="text-subtle-03" />
-        Generate
-      </Button>
       <div className="grid grid-cols-2 gap-1">
         {decks.map((deck) => (
           <DeckCard

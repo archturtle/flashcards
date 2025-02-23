@@ -83,7 +83,7 @@ export const createCard = createAsyncThunk(
 
 export const createManyCards = createAsyncThunk(
   "cards/create-many",
-  async (cards: Partial<Card>[]) => {
+  async (cards: Card[]) => {
     try {
       const response = await axinst.post(
         `${config.api.development}/card/create-many`,
@@ -177,6 +177,13 @@ const decksSlice = createSlice({
           cards: state.cards.map((card) =>
             card.id === updatedCard.id ? updatedCard : card,
           ),
+        };
+      })
+      .addCase(createManyCards.fulfilled, (state, action) => {
+        const createdCards = action.payload;
+        return {
+          ...state,
+          cards: [...state.cards, ...createdCards],
         };
       });
   },

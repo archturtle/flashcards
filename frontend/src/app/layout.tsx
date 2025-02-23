@@ -7,6 +7,7 @@ import { IconCardsFilled } from "@tabler/icons-react";
 import type { Metadata } from "next";
 import { Alegreya, Work_Sans } from "next/font/google";
 import "./globals.css";
+import QueryProvider from "@/store/react-query/QueryProvider";
 
 const alegreya = Alegreya({
   variable: "--font-alegreya",
@@ -23,8 +24,8 @@ const workSans = Work_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Habit Square",
-  description: "Simple habit tracker",
+  title: "Smart Cards",
+  description: "Smart Flashcard App",
 };
 
 export default function RootLayout({
@@ -47,20 +48,22 @@ export default function RootLayout({
       >
         <AuthProvider>
           <ReduxProvider>
-            <ScreenContainer className="bg-base text-text flex flex-col items-center justify-between p-[2px] overflow-y-auto scrollbar-hide max-w-full">
-              <div className="flex px-5 flex-col items-center max-w-[600px] lg:max-w-[800px] w-full flex-1 max-w-full">
-                <div className="flex items-center gap-2 w-full  justify-between py-[4px]">
-                  <div className="flex items-center gap-2">
-                    <IconCardsFilled />
-                    <h3 className="font-bold text-[24px] text-center">
-                      Smart Cards
-                    </h3>
+            <QueryProvider>
+              <ScreenContainer className="bg-base text-text flex flex-col items-center justify-between p-[2px] overflow-y-auto scrollbar-hide max-w-full">
+                <div className="flex px-5 flex-col items-center max-w-[600px] lg:max-w-[800px] w-full flex-1 max-w-full gap-1">
+                  <div className="flex items-center gap-2 w-full  justify-between py-[4px] border-b-[2px] border-b-text-base">
+                    <div className="flex items-center gap-2">
+                      <IconCardsFilled />
+                      <h3 className="font-bold text-[24px] text-center">
+                        Smart Cards
+                      </h3>
+                    </div>
+                    <Profile className="px-[20px] py-[4px]" />
                   </div>
-                  <Profile className="px-[20px] py-[4px]" />
+                  {children}
                 </div>
-                {children}
-              </div>
-            </ScreenContainer>
+              </ScreenContainer>
+            </QueryProvider>
           </ReduxProvider>
         </AuthProvider>
       </body>

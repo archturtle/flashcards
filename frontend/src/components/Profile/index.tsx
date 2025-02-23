@@ -5,15 +5,21 @@ import Logout from "../Logout";
 import { ButtonProps } from "../ui/Button";
 
 const Profile = ({ ...props }: ButtonProps) => {
-  const { isAuthenticated, isLoading } = useAuth0();
+  const { user, isAuthenticated, isLoading } = useAuth0();
 
   if (isLoading) {
     return <div>Loading ...</div>;
   }
 
   const ButtonComponent = isAuthenticated ? Logout : Login;
-  return <ButtonComponent {...props} />;
+  return (
+    <div className="flex gap-3 items-center">
+      {user && (
+        <span className="hidden sm:block text-text-base/50">{user.name}</span>
+      )}
+      <ButtonComponent {...props} />
+    </div>
+  );
 };
 
 export default Profile;
-
