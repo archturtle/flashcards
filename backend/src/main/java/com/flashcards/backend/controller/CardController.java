@@ -1,6 +1,5 @@
 package com.flashcards.backend.controller;
 
-import com.auth0.jwt.JWT;
 import com.flashcards.backend.model.Card;
 import com.flashcards.backend.persistence.CardDAO;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -24,7 +23,6 @@ import jakarta.validation.Valid;
 import javax.imageio.ImageIO;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -40,23 +38,6 @@ public class CardController {
         this.chatClient = builder.build();
     }
 
-//    @GetMapping("/get/{id}")
-//    public ResponseEntity<ArrayList<Card>> getCardById(@PathVariable String id) {
-//        LOG.log(Level.INFO, "GET /get/{0}", id);
-//
-//        try {
-//            ArrayList<String> ids = new ArrayList<>(Arrays.asList(id.split(",")));
-//            ArrayList<Card> cards = new ArrayList<>(cardDAO.findAllById(ids));
-//            if (!cards.isEmpty()) {
-//                return new ResponseEntity<>(cards, HttpStatus.OK);
-//            } else {
-//                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//            }
-//        } catch (Exception e) {
-//            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//    }
-
     @GetMapping("/deck/{deckId}")
     public ResponseEntity<ArrayList<Card>> getCardsByDeckId(@PathVariable String deckId, @RequestHeader("Authorization") String token) {
         LOG.log(Level.INFO, "GET /deck/{0}", deckId);
@@ -70,6 +51,7 @@ public class CardController {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
         } catch (Exception e) {
+            LOG.log(Level.SEVERE, e.getLocalizedMessage());
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -84,6 +66,7 @@ public class CardController {
             Card new_deck = cardDAO.save(card);
             return new ResponseEntity<>(new_deck, HttpStatus.CREATED);
         } catch (Exception e) {
+            LOG.log(Level.SEVERE, e.getLocalizedMessage());
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -101,6 +84,7 @@ public class CardController {
             ArrayList<Card> allCards = new ArrayList<>(cardDAO.saveAll(cards));
             return new ResponseEntity<>(allCards, HttpStatus.CREATED);
         } catch (Exception e) {
+            LOG.log(Level.SEVERE, e.getLocalizedMessage());
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -118,6 +102,7 @@ public class CardController {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
         } catch (Exception e) {
+            LOG.log(Level.SEVERE, e.getLocalizedMessage());
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -136,6 +121,7 @@ public class CardController {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
         } catch (Exception e) {
+            LOG.log(Level.SEVERE, e.getLocalizedMessage());
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -224,7 +210,7 @@ public class CardController {
                 return new ResponseEntity<>(response, HttpStatus.OK);
             }
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            LOG.log(Level.SEVERE, e.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
